@@ -51,13 +51,34 @@ tr{border-bottom:1px solid #E5E7EB}
 .acc-hdr:hover{background:#EFF6FF}
 .acc-hdr h4{font-size:11px;font-weight:600;margin:0}
 .acc-hdr .counts{display:flex;gap:6px;font-size:9px}
-.acc-body{padding:0 14px 10px;display:none}
-.acc.open .acc-body{display:block}
-.acc-hdr .arrow{transition:transform 0.2s;font-size:10px;color:#6B7280}
+.acc-hdr .arrow{transition:transform 0.3s ease-out;font-size:10px;color:#6B7280}
 .acc.open .acc-hdr .arrow{transform:rotate(90deg)}
 .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tscroll table{min-width:500px}
 .fin-bar{background:#F3F4F6;border-radius:4px;height:16px;position:relative;overflow:hidden;margin-bottom:2px}
+.fin-bar>div{animation:barGrow 1.8s ease-out both}
+.sbar>div{animation:barGrow 1.6s ease-out both}
+.sbar>div:nth-child(2){animation-delay:0.25s}
+.sbar>div:nth-child(3){animation-delay:0.3s}
+@keyframes barGrow{from{max-width:0;opacity:0.3}to{max-width:100%;opacity:1}}
+@keyframes growUp{from{transform:scaleY(0);opacity:0.3}to{transform:scaleY(1);opacity:1}}
+.kpi{animation:fadeUp 1.4s ease-out both}
+.kpi:nth-child(2){animation-delay:0.2s}
+.kpi:nth-child(3){animation-delay:0.36s}
+.kpi:nth-child(4){animation-delay:0.36s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.panel.on{animation:fadeIn 1.25s ease-out}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.oe-card{animation:slideIn 1.4s ease-out both}
+.oe-card:nth-child(2){animation-delay:0.2s}
+@keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.acc{animation:fadeUp 1.3s ease-out both}
+.acc:nth-child(2){animation-delay:0.1s}
+.acc:nth-child(3){animation-delay:0.25s}
+.acc:nth-child(4){animation-delay:0.25s}
+.acc:nth-child(5){animation-delay:0.3s}
+.acc-body{overflow:hidden;transition:max-height 0.3s ease-out;max-height:0;padding:0 14px;display:block}
+.acc.open .acc-body{max-height:2000px;padding:0 14px 10px}
 @media(max-width:600px){
   .page{padding:8px}
   .hdr{padding:12px 14px;flex-direction:column;align-items:flex-start}
@@ -95,10 +116,10 @@ tr{border-bottom:1px solid #E5E7EB}
 
 <div class="tabs" id="tabs">
   <button class="on" data-t="resumen">Resumen</button>
-  <button data-t="rrhh">Talento Humano</button>
+  <button data-t="rrhh">Talento humano</button>
   <button data-t="productos">Productos</button>
   <button data-t="ml">Marco Lógico</button>
-  <button data-t="corr">Oficios</button>
+  <button data-t="corr">Correspondencia</button>
 </div>
 
 <div class="content">
@@ -127,18 +148,19 @@ tr{border-bottom:1px solid #E5E7EB}
   <div class="sec">
     <h3>Ejecución financiera por rubro</h3>
     <div style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Honorarios</span><span style="color:#6B7280">309.990 / 497.933 € (62,3%)</span></div>
-      <div class="fin-bar"><div style="position:absolute;left:0;top:0;height:100%;width:17%;background:#93C5FD"></div><div style="position:absolute;left:17%;top:0;height:100%;width:22.6%;background:#60A5FA"></div><div style="position:absolute;left:39.6%;top:0;height:100%;width:22.7%;background:#1D4ED8"></div></div>
-      <div style="display:flex;gap:10px;font-size:7px;color:#6B7280;margin-top:2px"><span>S1: 84.360</span><span>S3: 112.440</span><span>S4: 113.190</span><span style="margin-left:auto">No ejecutado: 187.943 €</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Honorarios</span><span style="color:#6B7280"><strong>309.990</strong> / 497.933 € (<strong>62,3%</strong>)</span></div>
+      <div class="fin-bar" style="height:26px;border-radius:6px"><div style="position:absolute;left:0;top:0;height:100%;width:17%;background:#93C5FD;display:flex;align-items:center;justify-content:center"><span style="font-size:6px;font-weight:600;color:#1E3A8C">S1: 84.360</span></div><div style="position:absolute;left:17%;top:0;height:100%;width:22.6%;background:#60A5FA;display:flex;align-items:center;justify-content:center"><span style="font-size:6px;font-weight:600;color:#fff">S3: 112.440</span></div><div style="position:absolute;left:39.6%;top:0;height:100%;width:22.7%;background:#1D4ED8;display:flex;align-items:center;justify-content:center"><span style="font-size:6px;font-weight:600;color:#fff">S4: 113.190</span></div></div>
+      <div style="font-size:7px;color:#6B7280;margin-top:2px;text-align:right">No ejecutado: 187.943 €</div>
     </div>
     <div style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Imprevistos</span><span style="color:#6B7280">26.433 / 315.057 € (8,4%)</span></div>
-      <div class="fin-bar"><div style="position:absolute;left:0;top:0;height:100%;width:6.1%;background:#93C5FD"></div><div style="position:absolute;left:6.1%;top:0;height:100%;width:2.3%;background:#60A5FA"></div></div>
-      <div style="display:flex;gap:10px;font-size:7px;color:#6B7280;margin-top:2px"><span>S1: 19.098</span><span>S3: 7.335</span><span style="margin-left:auto">No ejecutado: 288.624 €</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Imprevistos</span><span style="color:#6B7280"><strong>26.433</strong> / 315.057 € (<strong>8,4%</strong>)</span></div>
+      <div class="fin-bar" style="height:26px;border-radius:6px"><div title="S1: 19.098 €" style="position:absolute;left:0;top:0;height:100%;width:6.1%;background:#93C5FD;cursor:help;display:flex;align-items:center;justify-content:center"><span style="font-size:6px;font-weight:600;color:#1E3A8C">S1</span></div><div title="S3: 7.335 €" style="position:absolute;left:6.1%;top:0;height:100%;width:2.3%;background:#60A5FA;cursor:help;display:flex;align-items:center;justify-content:center"><span style="font-size:5px;font-weight:600;color:#fff">S3</span></div></div>
+      <div style="font-size:7px;color:#6B7280;margin-top:2px;display:flex;justify-content:space-between"><span style="font-style:italic">Pase el cursor sobre los segmentos</span><span>No ejecutado: 288.624 €</span></div>
     </div>
     <div style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Verificación de gastos</span><span style="color:#6B7280">6.750 / 7.000 € (96,4%)</span></div>
-      <div class="fin-bar"><div style="position:absolute;left:0;top:0;height:100%;width:25%;background:#93C5FD"></div><div style="position:absolute;left:25%;top:0;height:100%;width:35.7%;background:#60A5FA"></div><div style="position:absolute;left:60.7%;top:0;height:100%;width:35.7%;background:#1D4ED8"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Verificación de gastos</span><span style="color:#6B7280"><strong>6.750</strong> / 7.000 € (<strong>96,4%</strong>)</span></div>
+      <div class="fin-bar" style="height:26px;border-radius:6px"><div style="position:absolute;left:0;top:0;height:100%;width:25%;background:#93C5FD;display:flex;align-items:center;justify-content:center"><span style="font-size:6px;font-weight:600;color:#1E3A8C">S1: 1.750</span></div><div style="position:absolute;left:25%;top:0;height:100%;width:35.7%;background:#60A5FA;display:flex;align-items:center;justify-content:center"><span style="font-size:6px;font-weight:600;color:#fff">S3: 2.500</span></div><div style="position:absolute;left:60.7%;top:0;height:100%;width:35.7%;background:#1D4ED8;display:flex;align-items:center;justify-content:center"><span style="font-size:6px;font-weight:600;color:#fff">S4: 2.500</span></div></div>
+      <div style="font-size:7px;color:#6B7280;margin-top:2px;text-align:right">Saldo: 250 €</div>
     </div>
     <div style="padding:10px;background:#EFF6FF;border-radius:6px;margin-top:8px">
       <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;flex-wrap:wrap;gap:4px"><span>Valor máximo del contrato</span><span style="color:#1D4ED8">343.173 / 819.990 € (41,9%)</span></div>
@@ -195,7 +217,7 @@ tr{border-bottom:1px solid #E5E7EB}
   </div>
 
   <div class="sec">
-    <h3>Ejecución de días por semestre (barras apiladas)</h3>
+    <h3>Ejecución de días por semestre</h3>
     <div id="stacked-chart" style="display:flex;gap:8px;align-items:flex-end;padding:0 4px;margin-bottom:6px"></div>
     <div style="display:flex;gap:12px;justify-content:center;margin-top:8px;padding-top:6px;border-top:1px solid #E5E7EB;flex-wrap:wrap">
       <span style="display:flex;align-items:center;gap:4px;font-size:8px;color:#4B5563"><span style="width:10px;height:10px;border-radius:2px;background:#1D4ED8;display:inline-block"></span>Jefe de Equipo</span>
@@ -365,7 +387,7 @@ tr{border-bottom:1px solid #E5E7EB}
 <!-- CORRESPONDENCIA -->
 <div class="panel" id="p-corr">
   <div class="sec">
-    <h3>Correspondencia relevante del contrato</h3>
+    <h3>Correspondencia del contrato</h3>
     <div class="tscroll">
     <table>
       <thead><tr><th>Fecha</th><th>Referencia</th><th>Emisor</th><th>Objeto</th><th class="hide-mob">Implicación</th></tr></thead>
@@ -408,16 +430,18 @@ const sems = [
 ];
 const cols = {ep1:"#1D4ED8",ep2:"#60A5FA",sr:"#059669",jr:"#D97706"};
 const chart = document.getElementById("stacked-chart");
+let segDelay = 0;
 sems.forEach(s => {
   const t = s.ep1+s.ep2+s.sr+s.jr;
   let h = "";
   h += `<div style="flex:1;text-align:center">`;
   h += `<div style="font-size:9px;font-weight:600;color:${t>0?"#111827":"#DC2626"};margin-bottom:3px">${t}</div>`;
-  h += `<div style="display:flex;flex-direction:column-reverse;height:100px">`;
-  ["ep1","ep2","sr","jr"].forEach(k => {
+  h += `<div style="display:flex;flex-direction:column-reverse;height:100px;overflow:hidden">`;
+  ["ep1","ep2","sr","jr"].forEach((k,j) => {
     if (s[k] > 0) {
       const ht = s[k]/196*90;
-      h += `<div style="width:100%;height:${ht}px;background:${cols[k]};display:flex;align-items:center;justify-content:center"><span style="font-size:7px;font-weight:600;color:#fff">${s[k]}</span></div>`;
+      h += `<div style="width:100%;height:${ht}px;background:${cols[k]};display:flex;align-items:center;justify-content:center;animation:growUp 0.5s ease-out both;animation-delay:${0.12*segDelay}s;transform-origin:bottom"><span style="font-size:7px;font-weight:600;color:#fff">${s[k]}</span></div>`;
+      segDelay++;
     }
   });
   if (t===0) h += `<div style="width:100%;height:4px;background:#E5E7EB;border-radius:4px"></div>`;
