@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUATEPED · Cuadro de Mando · Informe Final</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Montserrat',sans-serif;background:#F9FAFB;color:#1B2A4A}
+.page{max-width:840px;margin:0 auto;padding:16px}
+.hdr{background:linear-gradient(135deg,#0F172A,#1E3A8C);border-radius:10px 10px 0 0;padding:16px 20px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.hdr-left img{width:36px;height:36px;border-radius:6px}
+.hdr .sup{font-size:9px;font-weight:600;letter-spacing:0.08em;opacity:0.7}
+.hdr h1{font-size:19px;font-weight:800;letter-spacing:-0.01em;margin-top:2px}
+.hdr .sub{font-size:10px;opacity:0.8;margin-top:2px}
+.kpis-h{display:flex;gap:14px;flex-wrap:wrap}
+.kpis-h>div{text-align:center}
+.kpis-h .v{font-size:18px;font-weight:600}
+.kpis-h .l{font-size:7px;opacity:0.7;margin-top:1px}
+.tabs{display:flex;background:#fff;border-left:1px solid #E5E7EB;border-right:1px solid #E5E7EB;overflow-x:auto}
+.tabs button{flex:1;min-width:60px;padding:8px 4px;font-size:10px;font-weight:400;font-family:'Montserrat';background:#fff;color:#6B7280;border:none;border-bottom:1px solid #E5E7EB;cursor:pointer;white-space:nowrap}
+.tabs button.on{font-weight:600;background:#EFF6FF;color:#1D4ED8;border-bottom:2px solid #2563EB}
+.content{background:#fff;border:1px solid #E5E7EB;border-top:none;border-radius:0 0 10px 10px;padding:24px;min-height:400px}
+.panel{display:none}.panel.on{display:block}
+.sec{margin-bottom:22px}
+.sec h3{font-size:12px;font-weight:600;color:#111827;margin-bottom:10px;border-bottom:2px solid #2563EB;padding-bottom:4px}
+.kpis{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.kpi{flex:1;min-width:100px;background:#F9FAFB;border-radius:8px;padding:12px 14px;text-align:center;border-top:3px solid #374151}
+.kpi .v{font-size:20px;font-weight:600;line-height:1.1}
+.kpi .l{font-size:8px;color:#6B7280;margin-top:3px}
+.kpi .s{font-size:8px;color:#6B7280;margin-top:1px}
+table{width:100%;border-collapse:collapse}
+th{padding:6px 8px;font-size:10px;font-weight:600;color:#fff;background:#1E3A8C;text-align:left}
+td{padding:5px 8px;font-size:10px}
+tr{border-bottom:1px solid #E5E7EB}
+.sbar{background:#E5E7EB;border-radius:6px;overflow:hidden;display:flex}
+.sbar>div{display:flex;align-items:center;justify-content:center}
+.sbar span{font-size:8px;font-weight:600;color:#fff}
+.badge{font-size:7px;font-weight:600;padding:2px 6px;border-radius:3px;display:inline-block}
+.bg-green{background:#ECFDF5;color:#047857}.bg-amber{background:#FFFBEB;color:#B45309}.bg-blue{background:#EFF6FF;color:#1D4ED8}.bg-red{background:#FEF2F2;color:#DC2626}.bg-gray{background:#F3F4F6;color:#6B7280}
+.oe-card{border:1px solid #E5E7EB;border-radius:8px;padding:16px;margin-bottom:14px;border-left:4px solid #1D4ED8}
+.oe-card.oe2{border-left-color:#047857}
+.oe-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:9px;color:#6B7280;margin:6px 0 12px}
+.leg span{display:flex;align-items:center;gap:3px}
+.leg i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.acc{border:1px solid #E5E7EB;border-radius:8px;margin-bottom:8px;overflow:hidden}
+.acc-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;cursor:pointer;background:#F9FAFB;user-select:none}
+.acc-hdr:hover{background:#EFF6FF}
+.acc-hdr h4{font-size:11px;font-weight:600;margin:0}
+.acc-hdr .counts{display:flex;gap:6px;font-size:9px}
+.acc-body{padding:0 14px 10px;display:none}
+.acc.open .acc-body{display:block}
+.acc-hdr .arrow{transition:transform 0.2s;font-size:10px;color:#6B7280}
+.acc.open .acc-hdr .arrow{transform:rotate(90deg)}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tscroll table{min-width:500px}
+.fin-bar{background:#F3F4F6;border-radius:4px;height:16px;position:relative;overflow:hidden;margin-bottom:2px}
+@media(max-width:600px){
+  .page{padding:8px}
+  .hdr{padding:12px 14px;flex-direction:column;align-items:flex-start}
+  .hdr h1{font-size:15px}
+  .kpis-h .v{font-size:14px}
+  .content{padding:14px;min-height:300px}
+  .tabs button{font-size:8px;padding:6px 2px}
+  th,td{padding:4px 5px;font-size:8px}
+  .oe-grid{grid-template-columns:1fr}
+  .kpi{min-width:45%;flex:1 1 45%}
+  .kpi .v{font-size:16px}
+  .sec h3{font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div>
+      <div class="sup">CONTRATO LA-2022-440-213 · GUATEPED</div>
+      <h1>Cuadro de Mando · Informe Final</h1>
+      <div class="sub">Enero 2023 – Septiembre 2025</div>
+    </div>
+  </div>
+  <div class="kpis-h">
+    <div><div class="v">343.173 €</div><div class="l">Ejecutado</div></div>
+    <div><div class="v">41,9%</div><div class="l">% Ejecución</div></div>
+    <div><div class="v">539</div><div class="l">Días consumidos</div></div>
+    <div><div class="v">59,9%</div><div class="l">% Días</div></div>
+    <div><div class="v">18/33</div><div class="l">Meses activos</div></div>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="on" data-t="resumen">Resumen General</button>
+  <button data-t="rrhh">Recursos Humanos</button>
+  <button data-t="productos">Productos</button>
+  <button data-t="ml">Marco Lógico</button>
+  <button data-t="corr">Correspondencia relevante</button>
+</div>
+
+<div class="content">
+
+<!-- RESUMEN -->
+<div class="panel on" id="p-resumen">
+  <div class="sec">
+    <h3>Distribución temporal del contrato</h3>
+    <div style="margin-bottom:8px">
+      <div class="kpi" style="border-top-color:#374151;width:100%;min-width:0"><div class="v">33</div><div class="l">Meses totales · Enero 2023 – Septiembre 2025</div></div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:6px">
+      <div class="kpi" style="border-top-color:#059669;flex:55;min-width:0"><div class="v" style="color:#059669">18</div><div class="l">Meses activos</div><div class="s">55%</div></div>
+      <div class="kpi" style="border-top-color:#DC2626;flex:45;min-width:0"><div class="v" style="color:#DC2626">15</div><div class="l">Meses de hiato</div><div class="s">45%</div></div>
+    </div>
+    <div class="sbar" style="height:24px">
+      <div style="width:55%;background:#059669"><span>55%</span></div>
+      <div style="width:45%;background:#EF4444"><span>45%</span></div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:6px;flex-wrap:wrap">
+      <span style="display:flex;align-items:center;gap:4px;font-size:8px;color:#6B7280"><i class="leg" style="width:10px;height:10px;border-radius:2px;background:#059669;display:inline-block"></i>Actividad efectiva</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:8px;color:#6B7280"><i class="leg" style="width:10px;height:10px;border-radius:2px;background:#EF4444;display:inline-block"></i>Hiato / inactividad forzosa</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Ejecución financiera por rubro</h3>
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Honorarios</span><span style="color:#6B7280">309.990 / 497.933 € (62,3%)</span></div>
+      <div class="fin-bar"><div style="position:absolute;left:0;top:0;height:100%;width:17%;background:#93C5FD"></div><div style="position:absolute;left:17%;top:0;height:100%;width:22.6%;background:#60A5FA"></div><div style="position:absolute;left:39.6%;top:0;height:100%;width:22.7%;background:#1D4ED8"></div></div>
+      <div style="display:flex;gap:10px;font-size:7px;color:#6B7280;margin-top:2px"><span>S1: 84.360</span><span>S3: 112.440</span><span>S4: 113.190</span><span style="margin-left:auto">No ejecutado: 187.943 €</span></div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Imprevistos</span><span style="color:#6B7280">26.433 / 315.057 € (8,4%)</span></div>
+      <div class="fin-bar"><div style="position:absolute;left:0;top:0;height:100%;width:6.1%;background:#93C5FD"></div><div style="position:absolute;left:6.1%;top:0;height:100%;width:2.3%;background:#60A5FA"></div></div>
+      <div style="display:flex;gap:10px;font-size:7px;color:#6B7280;margin-top:2px"><span>S1: 19.098</span><span>S3: 7.335</span><span style="margin-left:auto">No ejecutado: 288.624 €</span></div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">Verificación de gastos</span><span style="color:#6B7280">6.750 / 7.000 € (96,4%)</span></div>
+      <div class="fin-bar"><div style="position:absolute;left:0;top:0;height:100%;width:25%;background:#93C5FD"></div><div style="position:absolute;left:25%;top:0;height:100%;width:35.7%;background:#60A5FA"></div><div style="position:absolute;left:60.7%;top:0;height:100%;width:35.7%;background:#1D4ED8"></div></div>
+    </div>
+    <div style="padding:10px;background:#EFF6FF;border-radius:6px;margin-top:8px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;flex-wrap:wrap;gap:4px"><span>Valor máximo del contrato</span><span style="color:#1D4ED8">343.173 / 819.990 € (41,9%)</span></div>
+      <div class="sbar" style="height:22px;margin-top:4px"><div style="width:41.9%;background:#1D4ED8"><span>42%</span></div></div>
+      <div style="font-size:9px;color:#6B7280;text-align:center;margin-top:4px">476.817 € no ejecutados (58,1% del valor contractual)</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Estado final por objetivo específico</h3>
+    <div class="oe-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:4px">
+        <div><span style="font-size:11px;font-weight:600;color:#1D4ED8">OE1</span> <span style="font-size:11px;font-weight:600">Formación laboral mediante alianzas público-privadas</span></div>
+        <span class="badge bg-gray">CERRADO</span>
+      </div>
+      <div class="sbar" style="height:22px"><div style="width:62.5%;background:#059669"><span>63%</span></div><div style="width:12.5%;background:#F59E0B"><span>13%</span></div><div style="width:25%;background:#D1D5DB"><span style="color:#4B5563">25%</span></div></div>
+      <div class="leg"><span><i style="background:#059669"></i>5 completados</span><span><i style="background:#F59E0B"></i>1 parcial</span><span><i style="background:#D1D5DB"></i>2 no iniciados</span><span style="margin-left:auto;font-weight:600;color:#374151">8 indicadores</span></div>
+      <div class="oe-grid">
+        <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Efectos alcanzados</div><div style="font-size:10px">E1.1 Diagnóstico ✓ · E1.2 Modelo ✓</div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-top:10px;margin-bottom:3px">No ejecutado</div><div style="font-size:10px">El piloto de 165 aprendices no pudo ejecutarse. El modelo fue diseñado, socializado y validado pero la fase de implementación no se inició por ausencia de Jefe de Equipo refrendado.</div></div>
+        <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Valoración final</div><div style="font-size:10px;font-style:italic">Fase de diseño completada con éxito. Modelo listo para implementación por cualquier actor institucional (INTECAP, MINTRAB, CONED, sector privado). La inversión en diseño se preserva como patrimonio técnico del país.</div></div>
+      </div>
+    </div>
+    <div class="oe-card oe2">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:4px">
+        <div><span style="font-size:11px;font-weight:600;color:#047857">OE2</span> <span style="font-size:11px;font-weight:600">Fortalecer servicios públicos de desarrollo empresarial MIPYME</span></div>
+        <span class="badge bg-gray">CERRADO</span>
+      </div>
+      <div class="sbar" style="height:22px"><div style="width:22.2%;background:#059669"><span>22%</span></div><div style="width:55.6%;background:#F59E0B"><span>56%</span></div><div style="width:22.2%;background:#D1D5DB"><span style="color:#4B5563">22%</span></div></div>
+      <div class="leg"><span><i style="background:#059669"></i>6 completados</span><span><i style="background:#F59E0B"></i>15 parcial</span><span><i style="background:#D1D5DB"></i>6 no iniciados</span><span style="margin-left:auto;font-weight:600;color:#374151">27 indicadores</span></div>
+      <div class="oe-grid">
+        <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Efectos alcanzados</div><div style="font-size:10px">E2.1 Parcial, 4 capas de información establecidas</div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-top:10px;margin-bottom:3px">No ejecutado</div><div style="font-size:10px">Implementación del modelo SDE, fortalecimiento de sedes, sistema de información gerencial y componente de seguimiento y evaluación. La COM 38 nunca recibió pronunciamiento del beneficiario (12 meses de espera).</div></div>
+        <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Valoración final</div><div style="font-size:10px;font-style:italic">Fase diagnóstica completa. Productos utilizables por el Viceministerio de la MIPYME sin necesidad del contratista. El Dashboard de MIPYMEs (151.154 empresas georreferenciadas) y el diagnóstico organizacional quedan como herramientas operativas.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Estado del anticipo</h3>
+    <div class="kpis">
+      <div class="kpi" style="border-top-color:#374151"><div class="v">163.998 €</div><div class="l">Prefinanciación recibida</div><div class="s">Mes 1 del contrato</div></div>
+      <div class="kpi" style="border-top-color:#1D4ED8"><div class="v">115.690 €</div><div class="l">Reclamado en factura S4</div><div class="s">Única factura emitida</div></div>
+      <div class="kpi" style="border-top-color:#DC2626"><div class="v">48.308 €</div><div class="l">Pendiente de devolución</div><div class="s">163.998 − 115.690</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RRHH -->
+<div class="panel" id="p-rrhh">
+  <div class="kpis">
+    <div class="kpi" style="border-top-color:#1D4ED8"><div class="v">539</div><div class="l">Días ejecutados</div><div class="s">de 900 presupuestados</div></div>
+    <div class="kpi" style="border-top-color:#DC2626"><div class="v">361</div><div class="l">No ejecutados</div><div class="s">164 JdE + 11 Sr + 186 Jr</div></div>
+    <div class="kpi" style="border-top-color:#374151"><div class="v">59,9%</div><div class="l">% Ejecución días</div></div>
+    <div class="kpi" style="border-top-color:#D97706"><div class="v">18/33</div><div class="l">Meses activos / totales</div></div>
+  </div>
+
+  <div class="sec">
+    <h3>Ejecución de días por semestre (barras apiladas)</h3>
+    <div id="stacked-chart" style="display:flex;gap:8px;align-items:flex-end;padding:0 4px;margin-bottom:6px"></div>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:8px;padding-top:6px;border-top:1px solid #E5E7EB;flex-wrap:wrap">
+      <span style="display:flex;align-items:center;gap:4px;font-size:8px;color:#4B5563"><span style="width:10px;height:10px;border-radius:2px;background:#1D4ED8;display:inline-block"></span>Jefe de Equipo</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:8px;color:#4B5563"><span style="width:10px;height:10px;border-radius:2px;background:#60A5FA;display:inline-block"></span>Experto Principal 2</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:8px;color:#4B5563"><span style="width:10px;height:10px;border-radius:2px;background:#059669;display:inline-block"></span>Senior</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:8px;color:#4B5563"><span style="width:10px;height:10px;border-radius:2px;background:#D97706;display:inline-block"></span>Junior</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h3>Recapitulativo final de días</h3>
+    <div class="tscroll">
+    <table>
+      <thead><tr><th style="text-align:left">Categoría</th><th style="text-align:right">Adenda 2</th><th style="text-align:right">Ejecutados</th><th style="text-align:right">No ejecutados</th><th style="text-align:right">% Ejec.</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1D4ED8;margin-right:6px;vertical-align:middle"></span>EP-1 (Jefe de Equipo)</td><td style="text-align:right">427</td><td style="text-align:right;font-weight:600;color:#1D4ED8">263</td><td style="text-align:right;font-weight:600;color:#DC2626">164</td><td style="text-align:right">61,6%</td></tr>
+        <tr><td style="font-weight:600"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#60A5FA;margin-right:6px;vertical-align:middle"></span>EP-2 (Experto Principal 2)</td><td style="text-align:right">150</td><td style="text-align:right;font-weight:600;color:#1D4ED8">150</td><td style="text-align:right;color:#D1D5DB">0</td><td style="text-align:right">100%</td></tr>
+        <tr><td style="font-weight:600"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#059669;margin-right:6px;vertical-align:middle"></span>Senior (ECP-S)</td><td style="text-align:right">137</td><td style="text-align:right;font-weight:600;color:#1D4ED8">126</td><td style="text-align:right;font-weight:600;color:#DC2626">11</td><td style="text-align:right">92,0%</td></tr>
+        <tr><td style="font-weight:600"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#D97706;margin-right:6px;vertical-align:middle"></span>Junior</td><td style="text-align:right">186</td><td style="text-align:right;color:#D1D5DB">0</td><td style="text-align:right;font-weight:600;color:#DC2626">186</td><td style="text-align:right">0%</td></tr>
+        <tr style="background:#EFF6FF"><td style="font-weight:600">Total</td><td style="text-align:right;font-weight:600">900</td><td style="text-align:right;font-weight:600;color:#1D4ED8">539</td><td style="text-align:right;font-weight:600;color:#DC2626">361</td><td style="text-align:right;font-weight:600">59,9%</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTOS -->
+<div class="panel" id="p-productos">
+  <div class="kpis">
+    <div class="kpi" style="border-top-color:#059669"><div class="v">11</div><div class="l">Completados</div><div class="s">31% de 35</div></div>
+    <div class="kpi" style="border-top-color:#D97706"><div class="v">16</div><div class="l">Parcial</div><div class="s">46% de 35</div></div>
+    <div class="kpi" style="border-top-color:#DC2626"><div class="v">8</div><div class="l">No iniciados</div><div class="s">23% de 35</div></div>
+    <div class="kpi" style="border-top-color:#1D4ED8"><div class="v">3</div><div class="l">Ratificados OC</div><div class="s">OPED 130</div></div>
+  </div>
+
+  <div class="sec">
+    <h3>Avance final por subactividad</h3>
+    <div id="sub-bars"></div>
+  </div>
+
+  <div class="sec">
+    <h3>Productos completados: estado final</h3>
+    <div class="tscroll">
+    <table>
+      <thead><tr><th>Código</th><th>Producto</th><th>Entrega</th><th>Fecha</th><th style="text-align:center">Estado OC</th></tr></thead>
+      <tbody id="prod-table"></tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- MARCO LÓGICO -->
+<div class="panel" id="p-ml">
+  <div class="sec">
+    <h3>Marco lógico final</h3>
+    <div class="sbar" style="height:28px;margin-bottom:16px">
+      <div style="width:31.4%;background:#059669"><span>11 completados</span></div>
+      <div style="width:45.7%;background:#F59E0B"><span>16 parcial</span></div>
+      <div style="width:22.9%;background:#D1D5DB"><span style="color:#4B5563">8 no inic.</span></div>
+    </div>
+
+    <div class="acc open" id="acc-impact">
+      <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">
+        <h4>Impacto (Objetivo general)</h4>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="acc-body">
+        <div class="tscroll"><table style="min-width:700px">
+        <thead><tr><th>Indicador</th><th>Descripción</th><th>Base</th><th>Objetivo</th><th>Valor actual (septiembre 2025)</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;color:#1D4ED8;white-space:nowrap">IMP5</td><td style="font-size:9px">Nº enfoques/prácticas beneficiosas adoptados en terceros países</td><td style="font-size:8px;color:#6B7280">Por definir con MINECO</td><td style="font-size:8px">Al menos 2 enfoques en empleo digno adoptados (2026)</td><td style="font-size:8px">Modelo de Aprendizaje Dual diseñado. Taller de presentación realizado. Propuesta reforma normativa elaborada.</td></tr>
+          <tr><td style="font-weight:600;color:#1D4ED8;white-space:nowrap">IMP8</td><td style="font-size:9px">Nº prácticas a desafíos del mundo desarrolladas/adoptadas</td><td style="font-size:8px;color:#6B7280">No existe modelo formación dual en Guatemala (2023)</td><td style="font-size:8px">Al menos 1 práctica de formación dual adoptada como instrumento de política (2026)</td><td style="font-size:8px">Modelo diseñado (5 bloques) con currículo completo. Pendiente: adopción formal como política pública.</td></tr>
+          <tr><td style="font-weight:600;color:#1D4ED8;white-space:nowrap">GERF 1.11</td><td style="font-size:9px">ODS 8.5.2: Tasa desempleo (por sexo, edad, discapacidad)</td><td style="font-size:8px;color:#6B7280">Guatemala 2.5% (ENEI 2019)</td><td style="font-size:8px">Tasa desempleo ≤ 2.5% (2026)</td><td style="font-size:8px">Indicador nacional. No atribuible a este contrato.</td></tr>
+          <tr><td style="font-weight:600;color:#1D4ED8;white-space:nowrap">GERF 1.12</td><td style="font-size:9px">ODS 8.6.1: Proporción jóvenes NiNi (15-24 años)</td><td style="font-size:8px;color:#6B7280">Por definir (ENEI, 2023)</td><td style="font-size:8px">Reducción ≥ 1pp en áreas intervención (2026)</td><td style="font-size:8px">Indicador nacional. Piloto aprendices no ejecutado.</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <div class="acc" id="acc-effects">
+      <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">
+        <h4>Efectos (Objetivos específicos)</h4>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="counts"><span style="color:#059669;font-weight:600">2 alcanzados</span> <span style="color:#D97706;font-weight:600">1 parcial</span></div>
+          <span class="arrow">▶</span>
+        </div>
+      </div>
+      <div class="acc-body">
+        <div class="tscroll"><table style="min-width:700px">
+        <thead><tr><th>Efecto</th><th>Descripción</th><th style="text-align:center">Estado</th><th>Valor actual (septiembre de 2025)</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600;color:#1D4ED8;vertical-align:top">E1.1</td><td style="font-size:9px;vertical-align:top">Diagnóstico de oferta y demanda para formación profesional en espacio laboral</td><td style="text-align:center;vertical-align:top"><span class="badge bg-green">ALCANZADO</span></td><td style="font-size:8px">Diagnóstico elaborado y socializado. 6 sectores priorizados, 4 departamentos, 32 actores consultados. Encuestas diseñadas. Taller mayo 2025 realizado.</td></tr>
+          <tr><td style="font-weight:600;color:#1D4ED8;vertical-align:top">E1.2</td><td style="font-size:9px;vertical-align:top">Modelo de formación de aprendices estandarizado para implementar en empresas</td><td style="text-align:center;vertical-align:top"><span class="badge bg-green">ALCANZADO</span></td><td style="font-size:8px">Modelo en 5 bloques con currículo formativo completo, marco normativo, gobernanza, modelo financiero, incentivos. Socializado en taller mayo 2025. Ratificado OPED 130.</td></tr>
+          <tr><td style="font-weight:600;color:#047857;vertical-align:top">E2.1</td><td style="font-size:9px;vertical-align:top">Servicios SDE fortalecidos institucionalmente</td><td style="text-align:center;vertical-align:top"><span class="badge bg-amber">PARCIAL</span></td><td style="font-size:8px">4 capas de información: diagnóstico integral SDE, mejora tablero legado, dashboard MIPYMEs (151.154 empresas), marco competencial 13 cargos/88 evaluaciones. Pendiente: implementación modelo operativo y fortalecimiento sedes.</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <div id="ml-accordions"></div>
+
+    <div class="acc" id="acc-act">
+      <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">
+        <h4>Actividades</h4>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="acc-body">
+        <div class="tscroll"><table style="min-width:700px">
+        <thead><tr><th>Objetivo</th><th>Actividad</th><th>Subactividades</th><th>Medios</th><th>Imprevistos ejecutados</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:600;color:#1D4ED8;vertical-align:top">OE1</td>
+            <td style="font-size:9px;vertical-align:top">Actividad 2.2 PPOP: Formación laboral</td>
+            <td style="font-size:9px;vertical-align:top">2.2.1 Diagnóstico sectores + formación<br>2.2.2 Propuesta estandarizada</td>
+            <td style="font-size:8px;vertical-align:top">EP-1: 427 días<br>EP-2: 150 días<br>Expertos CP: 126 senior + 52 junior<br>Imprevistos</td>
+            <td style="font-size:8px;vertical-align:top">26.433 €</td>
+          </tr>
+          <tr>
+            <td style="font-weight:600;color:#047857;vertical-align:top">OE2</td>
+            <td style="font-size:9px;vertical-align:top">Actividad 3.1 PPOP: Fortalecimiento SDE</td>
+            <td style="font-size:9px;vertical-align:top">3.1.1 Fortalecimiento SDE<br>3.1.2 Fortalecimiento Centros<br>3.1.3 Adecuación Emprendimiento</td>
+            <td style="font-size:8px;vertical-align:top">(Recursos compartidos con OE1)</td>
+            <td style="font-size:8px;vertical-align:top">(Incluidos arriba)</td>
+          </tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;border:1px solid #E5E7EB;border-radius:8px;padding:16px;background:#F9FAFB">
+      <h4 style="font-size:11px;font-weight:600;color:#1B2A4A;margin-bottom:10px">Supuestos del marco lógico</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div style="font-size:9px;font-weight:600;color:#1D4ED8;margin-bottom:4px">Supuestos a nivel de efectos (OE1 y OE2)</div>
+          <div style="font-size:9px;color:#4B5563;line-height:1.6">
+            1. El sector privado mantiene la voluntad de participar en alianzas para la formación.<br>
+            2. La coyuntura sociopolítica y económica no dificulta la contratación.<br>
+            3. INTECAP y MINEDUC mantienen disposición para la colaboración.<br>
+            4. Existe compromiso político ministerial con la Política Nacional de Empleo Digno.<br>
+            5. La dirección de la SDE está abierta a los cambios organizativos propuestos.<br>
+            6. Las MIPYMEs mantienen demanda activa de servicios de desarrollo empresarial.<br>
+            7. El apoyo institucional del Programa facilita la implementación.
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:600;color:#047857;margin-bottom:4px">Supuestos a nivel de actividades</div>
+          <div style="font-size:9px;color:#4B5563;line-height:1.6">
+            1. La estabilidad política y social permite la ejecución de las actividades.<br>
+            2. El Programa de Empleo Digno y MINECO facilitan las instalaciones y la logística.<br>
+            3. Los expertos se movilizan según el calendario acordado.<br>
+            4. La coordinación interinstitucional se mantiene operativa.<br>
+            5. Se garantiza la continuidad del personal técnico ministerial.
+          </div>
+          <div style="font-size:9px;font-weight:600;color:#6B7280;margin-top:10px;margin-bottom:4px">Supuestos a nivel de productos</div>
+          <div style="font-size:9px;color:#4B5563;line-height:1.6">
+            1. Los actores clave participan activamente.<br>
+            2. MINECO y la SDE facilitan acceso a la información.<br>
+            3. Viabilidad jurídica para la revisión del marco legal de formación de aprendices.<br>
+            4. El personal de la SDE participa en los procesos de fortalecimiento.<br>
+            5. La dirección de la SDE asume las propuestas formuladas.<br>
+            6. El apoyo institucional del Programa facilita la implementación.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CORRESPONDENCIA -->
+<div class="panel" id="p-corr">
+  <div class="sec">
+    <h3>Correspondencia relevante del contrato</h3>
+    <div class="tscroll">
+    <table>
+      <thead><tr><th>Fecha</th><th>Referencia</th><th>Emisor</th><th>Objeto</th><th class="hide-mob">Implicación</th></tr></thead>
+      <tbody id="corr-table"></tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-top:1px solid #E5E7EB;margin-top:8px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAFfElEQVR42u2YW2yUVRDHZ8453/ftbne33Xa5tBC5KwlIlMQQEEjkIiKoxOiDCSTqgxfCi0YSMZAYNNzEBGkgBRKQRDRGHxQVEoNCBSsiBBDCpeUqQkMv29bd7u53OTM+LNTS3aXthgdi9mRf9js7c37nzMz/zLeIA9bA/TQE3GejCFQEKgIVgYpAPYbKOyEFYI7nzMDMRJzPEBGkFLkNiYm5ECBmcGMpIM7BJBAsKf0GIJDO8o5ALlFbOlcwEPxK+RQR34VKZe+PNFs+Y83G2eURn9aEiJnnnsc3bsZPn2s+eqzx0vlmYFBhUxPDbe9CoE65Y8YOXPHOFM9jRARkYGSAmzcTJ043HTp87XpDKwQNoQTnOePsE0JgMgz52qIJgUDu8+tMevsPXllffbh232URNgEhs2NEAJcqB5UsenFcTsO2DmfHrpPLP6hN2a4wZU4mkS9krW0pzyPH1dmzJQE1f87oA98vXLV6FtkaGbBbZF2PPI8cR2fnWaTUfHvxY7u/fCFgKdCE2J+klhKVEgCw5dNjF+pbWElDiSGVwelThk0YNwgAPE3L3pociVhvLtmjgqa+nReIoJRghmTKWVddl4g7UoqhlaF5cx8cNSxi23rW9OHLlk5ZsewnVeHXHvUVqGt3NTtPnDhwEXw+8BgQVNhaMG/MhjVPDqkM2Y5+4+WJR4437qg5psr93YwAETqTzsp1ddDugBLAtLyi9rPtzz87dzQRv/rSw2s3Hk7EXaGwR4L3rkORMkuFSnzRgDEgYEQDJMXXu07NeObzG41xQwlN/OG700qrgtrReGdNImJFNKCiATPqtwaG4u320pX7XZeEwKrK8KgRZeBozApb70DksedR14eZrcHB+hONS97bJwQScVVleMH80ZywpezpvcvKdbUMmk3NyY64k5kqDRpAjAUodbaR62hZ4f9md/2fZ1oMJZjhqRmjQCIz9NAtJYVSQkpUCnV7cuTwikiZBQBE1BJLg0S+J1cHAwgpOJ7+pe5aJl3GPxTFEtMjurNUubUt5bWk3DbbabdHjB28cdVMgUDEV/6KXbrchqbKlkhV4JXDAAhXrnXcyrOI3++TKYe7C0coaG1aNyeZZMsUIx8om/r40NKg4TjaNOXGbUfTrbYq92tN/QbC/DLv3XaHyIjdiwyY2e8zFr8ysYeJacqdXxyv3nRMlvqyafoExJgTE5ChanAo8y0et1M2CYH6rp7ONTRXbzu6eetxYShGBoZCgHKXHjH7zamThmaiU38hRp2OWerT3Wq+M+ms2XAondaM0BpLN1yMHT15025NY6kPIO/9WgiQYUinNTl55phJEwd7mpQUPx+8Cg4JxK5NI0Iy6aza8Du1OmAgMIOSEDBUxK81cQH90H93CKKUIqMxGR1z2pPhaHDz2tlCgNYQT6S/2n0eSsweCyFiecTfzlIYyAwMTMQ586Z/QImkqxMpDQweATEIMeHRoTXV8x4ZH7VtbVly/abD1xvaVYW/RxgYQGv2NAmBvbVl/QGaNnl40Ar4QlIKrBwUmjlt+HNPj/ZZwna0ZckfDzSs/qhOllqkSQi8Q6sE5i6IwoCIQGsm5o9XPpHzB5Ypv/3hzMLXv/NIoMJbzQ0CMGhNUopYrLOzw0aF9wAIEcJBU0qUkNvd2fqmT2qObNl+EqQUZrf2j0EgSikA+P21B92Eq/LoTd+BGBA8zfsPXY2W+4hZdJUOQ3tH6tTZptrfrtX++rfdkhZlPgDoomEGEPhPp713X0P11j/27rkkwla/aAAA8/1hxa7uKVzM4GggAIkQMJUh8i3GSQcIZdgk4nuWQ8LMMSUCJkLvBSyDFiJozQWIXP6OMVel9nGNAg6m+CpdBCoCFYGKQEWg/w3Qv5oTuhi6r1evAAAAAElFTkSuQmCC" alt="DEVPOLES" style="width:36px;height:36px;border-radius:4px">
+      <div style="font-size:8px;font-family:Montserrat;color:#6B7280;line-height:1.4">DEVPOLES BV/SRL<br>Contratista</div>
+    </div>
+    <div style="font-size:8px;font-family:Montserrat;color:#9CA3AF;text-align:center">LA-2022-440-213 · Financiado por la Unión Europea</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="font-size:8px;font-family:Montserrat;color:#6B7280;line-height:1.4;text-align:right">Programa de Apoyo<br>al Empleo Digno</div>
+      <img src="data:image/png;base64,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" alt="Programa Empleo Digno" style="height:40px;border-radius:4px;object-fit:contain">
+    </div>
+  </div>
+</div><!-- /page -->
+
+<script>
+// Tab switching
+document.getElementById("tabs").addEventListener("click", e => {
+  if (e.target.tagName !== "BUTTON") return;
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("on"));
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("on"));
+  e.target.classList.add("on");
+  document.getElementById("p-" + e.target.dataset.t).classList.add("on");
+});
+
+// Stacked bars
+const sems = [
+  {l:"S1",ep1:83,ep2:64,sr:0,jr:0},{l:"S2",ep1:0,ep2:0,sr:0,jr:0},
+  {l:"S3",ep1:110,ep2:86,sr:0,jr:0},{l:"S4",ep1:70,ep2:0,sr:126,jr:0},
+  {l:"S5",ep1:0,ep2:0,sr:0,jr:0},{l:"S6",ep1:0,ep2:0,sr:0,jr:0}
+];
+const cols = {ep1:"#1D4ED8",ep2:"#60A5FA",sr:"#059669",jr:"#D97706"};
+const chart = document.getElementById("stacked-chart");
+sems.forEach(s => {
+  const t = s.ep1+s.ep2+s.sr+s.jr;
+  let h = "";
+  h += `<div style="flex:1;text-align:center">`;
+  h += `<div style="font-size:9px;font-weight:600;color:${t>0?"#111827":"#DC2626"};margin-bottom:3px">${t}</div>`;
+  h += `<div style="display:flex;flex-direction:column-reverse;height:100px">`;
+  ["ep1","ep2","sr","jr"].forEach(k => {
+    if (s[k] > 0) {
+      const ht = s[k]/196*90;
+      h += `<div style="width:100%;height:${ht}px;background:${cols[k]};display:flex;align-items:center;justify-content:center"><span style="font-size:7px;font-weight:600;color:#fff">${s[k]}</span></div>`;
+    }
+  });
+  if (t===0) h += `<div style="width:100%;height:4px;background:#E5E7EB;border-radius:4px"></div>`;
+  h += `</div><div style="font-size:8px;color:#6B7280;margin-top:4px;font-weight:500">${s.l}</div></div>`;
+  chart.innerHTML += h;
+});
+
+// Subactivity bars
+const subs = [
+  {n:"Sub 2.2.1 Diagnóstico formación",c:2,p:0,ni:2,t:4},
+  {n:"Sub 2.2.2 Propuesta aprendices",c:3,p:1,ni:0,t:4},
+  {n:"Sub 3.1.1 Fortalecimiento institucional SDE",c:4,p:8,ni:5,t:17},
+  {n:"Sub 3.1.2 Sedes regionales",c:1,p:5,ni:0,t:6},
+  {n:"Sub 3.1.3 Emprendimiento",c:1,p:2,ni:1,t:4}
+];
+const sb = document.getElementById("sub-bars");
+subs.forEach(s => {
+  sb.innerHTML += `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">${s.n}</span><span style="color:#6B7280">${s.c}/${s.t}</span></div><div class="sbar" style="height:14px"><div style="width:${s.c/s.t*100}%;background:#059669"></div><div style="width:${s.p/s.t*100}%;background:#F59E0B"></div><div style="width:${s.ni/s.t*100}%;background:#D1D5DB"></div></div></div>`;
+});
+
+// Products table
+const prods = [
+  ["P1.1.1","Diagnóstico de sectores con necesidades de formación","COM 45","Oct 2024","pendiente"],
+  ["P1.1.2","Plan de trabajo oferta formación técnica en espacio laboral","COM 45","Oct 2024","pendiente"],
+  ["P1.2.1","Propuesta de formación de aprendices estandarizada","COM 45","Dic 2024","pendiente"],
+  ["P1.2.2","Memorias AT marco legal, contractual, incentivos","COM 53","Feb 2025","pendiente"],
+  ["P1.2.4","Currículos formativos con módulos de competencias","COM 45","Ene 2025","pendiente"],
+  ["P2.1.1","Diagnóstico por Programa/Sede y Memoria de resultados","COM 45","Oct 2024","pendiente"],
+  ["P2.1.6","Propuesta de perfil de puestos","COM 45","Oct 2024","ratificado"],
+  ["P2.1.13","Memorias de talleres de competencias blandas","COM 45","Oct 2024","ratificado"],
+  ["P2.1.17","Tablero gerencial general y por programa del SDE","COM 33","Ago 2024","sin_resp"],
+  ["P2.2.2","Perfil de puesto del delegado","COM 45","Oct 2024","ratificado"],
+  ["P2.3.2","Documento de brechas Ley vs situación actual (capítulo del Diagnóstico SDE)","COM 45","Oct 2024","pendiente"]
+];
+const pt = document.getElementById("prod-table");
+prods.forEach(p => {
+  const badge = p[4]==="ratificado"?`<span class="badge bg-green">RATIFICADO OPED 130</span>`:p[4]==="sin_resp"?`<span class="badge bg-amber">SIN RESPUESTA</span>`:`<span class="badge bg-blue">PENDIENTE APROBACIÓN</span>`;
+  pt.innerHTML += `<tr><td style="font-weight:600;color:#1D4ED8">${p[0]}</td><td style="font-size:9px">${p[1]}</td><td style="font-size:9px;color:#6B7280">${p[2]}</td><td style="font-size:9px;white-space:nowrap">${p[3]}</td><td style="text-align:center">${badge}</td></tr>`;
+});
+
+// Marco Lógico accordions
+const ml = [
+  {title:"Sub 2.2.1 Diagnóstico de sectores con necesidades de formación",c:2,p:0,ni:2,items:[
+    {code:"P1.1.1",fuente:"Diagnóstico sectores, IS4, socialización UGPED",desc:"Diagnóstico de sectores con necesidades de formación",st:"completado",del:"COM 45 (Anexo II)",oc:"Pendiente de aprobación",val:"6 sectores priorizados, 4 departamentos, 32 actores consultados. Encuestas de demanda laboral y oferta formativa diseñadas."},
+    {code:"P1.1.2",fuente:"ATCP-003 Bloque V, IS4/IS5",desc:"Plan de trabajo para concretar oferta de formación técnica en espacio laboral",st:"completado",del:"COM 45 (Anexo II)",oc:"Pendiente de aprobación",val:"Hoja de ruta en 4 fases (planificación estratégica, operativa, implementación, M&E) contenida en ATCP-003 Bloque V."},
+    {code:"P1.1.3",fuente:"IS4/IS5",desc:"Memoria de AT para apoyar implementación del plan de trabajo",st:"no iniciado",del:"",oc:"",val:"Condicionado a la ejecución del piloto."},
+    {code:"P1.1.4",fuente:"IS4/IS5",desc:"Nº de personas formadas en Programa de Aprendices (meta: 165)",st:"no iniciado",del:"",oc:"",val:"Piloto no ejecutado."}
+  ]},
+  {title:"Sub 2.2.2 Propuesta estandarizada de formación de aprendices",c:3,p:1,ni:0,items:[
+    {code:"P1.2.1",fuente:"ATCP-002, ATCP-003, actas taller mayo 2025",desc:"Propuesta de formación de aprendices estandarizada diseñada",st:"completado",del:"COM 45 (Anexo IV)",oc:"Pendiente de aprobación",val:"Modelo en 5 bloques: conceptualización, modelo Guatemala, programas formativos, aspectos transversales, hoja ruta. Modalidad dual estricta. Socializado mayo 2025."},
+    {code:"P1.2.2",fuente:"ATCP-003, IS4, actas taller mayo 2025",desc:"Memorias de AT para validar marco legal, contractual, incentivos, protección social",st:"completado",del:"COM 53",oc:"Pendiente de aprobación",val:"Marco normativo aprendizaje, gobernanza dual, modelo financiero, incentivos empresas, remuneración aprendiz. Taller mayo 2025 abordó ajustes."},
+    {code:"P1.2.3",fuente:"Convenios, memorias AT, IS5",desc:"Memorias de AT para logro de alianzas público-privadas",st:"parcial",del:"COM 45 (Anexo II)",oc:"",val:"Interés documentado de más de 20 empresas y centros de formación públicos, tercer sector y privados."},
+    {code:"P1.2.4",fuente:"Módulos transversales, UC y MF, ATCP-003",desc:"Currículos formativos con módulos de competencias diseñados",st:"completado",del:"COM 45 (Anexos V-VI)",oc:"Pendiente de aprobación",val:"Módulos transversales competencias básicas + Unidades de Competencia y Módulos Formativos vinculados al Catálogo Nacional de Cualificaciones Profesionales."}
+  ]},
+  {title:"Sub 3.1.1 Fortalecimiento institucional y estructuración de la SDE",c:4,p:8,ni:5,items:[
+    {code:"P2.1.1",fuente:"Diagnóstico SDE, COM 66, ATCP-001, IS4",desc:"Diagnóstico por Programa/Sede y Memoria de resultados",st:"completado",del:"COM 45 (Anexo I)",oc:"Pendiente de aprobación",val:"Análisis integral: legalidad, estructura, cartografía ISO procesos, personal, gestión, tecnologías, ecosistema. 9 conclusiones y matriz acciones AT."},
+    {code:"P2.1.2",fuente:"IS4",desc:"Memoria de resultados",st:"no iniciado",del:"",oc:"",val:"Talleres realizados con backstopping. Acciones no implementadas, fase diagnóstica."},
+    {code:"P2.1.3",fuente:"IS4, Diagnóstico SDE, COM 38/ATCP-002",desc:"Sistema de información para la dirección SDE",st:"parcial",del:"COM 38",oc:"Sin pronunciamiento",val:"ATCP-002 propone concepto SIG con 4 niveles datos y tablero gerencial PowerBI. Pendiente implementación de campo."},
+    {code:"P2.1.4",fuente:"IS4, Diagnóstico SDE, COM 38/ATCP-002",desc:"Propuesta de Procesos de operación de las unidades/áreas del SDE",st:"parcial",del:"COM 45 (Anexo I)",oc:"",val:"Categorización taxonómica ISO 9001: 4 procesos misionales, 15 subprocesos. ATCP-002 propone evaluación integral."},
+    {code:"P2.1.5",fuente:"IS4, Diagnóstico SDE, ATCP-001",desc:"Propuesta de estructura organizativa asumida por dirección SDE",st:"parcial",del:"COM 45 (Anexo I)",oc:"",val:"Análisis estructura actual (Dirección, Coordinaciones, Secciones, Sedes) con recomendaciones de ajuste."},
+    {code:"P2.1.6",fuente:"Diagnóstico competencias SDE (ATCP-001)",desc:"Propuesta de perfil de puestos",st:"completado",del:"COM 45 (Anexo III)",oc:"Ratificado OPED 130",val:"13 descriptivos de puestos homologados con marco SHL: objetivos, funciones, indicadores desempeño, competencias."},
+    {code:"P2.1.7",fuente:"Diagnóstico SDE, IS4",desc:"Modelos de operación",st:"parcial",del:"COM 45 (Anexo I)",oc:"",val:"Análisis elementos constitutivos modelo intervención. Modelos de operación ausentes en la SDE."},
+    {code:"P2.1.8",fuente:"Diagnóstico SDE, ATCP-001, IS4",desc:"Elementos de organización y funciones asumidos por Dirección SDE",st:"parcial",del:"COM 45 (Anexo I)",oc:"",val:"Elementos O&F actuales documentados (Acuerdo Ministerial, departamentos, secciones, sedes)."},
+    {code:"P2.1.9",fuente:"IS4",desc:"Memoria del proceso de implementación conjunta entre dirección SDE y consultoría",st:"no iniciado",del:"",oc:"",val:"Implementación modelo SDE no completada."},
+    {code:"P2.1.10",fuente:"IS4",desc:"Memoria de experiencias y resultados",st:"no iniciado",del:"",oc:"",val:"Implementación modelo SDE no completada."},
+    {code:"P2.1.11",fuente:"IS4, COM 38/ATCP-002",desc:"Procedimientos para la mejora del monitoreo y evaluación",st:"parcial",del:"COM 38",oc:"Sin pronunciamiento",val:"Carencia M&E identificada. Tablero legado mejorado (+3 campos). ATCP-002 propone componente MEAL (15 días senior)."},
+    {code:"P2.1.12",fuente:"Informe final proyecto",desc:"Memoria de experiencias y resultados del M&E",st:"no iniciado",del:"",oc:"",val:"No se implementa el procedimiento por no haberse aprobado la misión."},
+    {code:"P2.1.13",fuente:"Diagnóstico competencias SDE (ATCP-001)",desc:"Memorias de talleres de competencias blandas",st:"completado",del:"COM 45 (Anexo III)",oc:"Ratificado OPED 130",val:"ATCP-001: marco SHL 6 pasos, 13 cargos homologados, 88 evaluaciones OPQ32+Verify Interactive. Trabajo experta Nakagawa ratificado."},
+    {code:"P2.1.14",fuente:"IS3/IS4, COM 38/ATCP-002",desc:"Documento con la arquitectura del sistema propuesto",st:"parcial",del:"COM 45 (Anexo I)",oc:"",val:"Se planifica diseño de arquitectura del sistema y tableros."},
+    {code:"P2.1.15",fuente:"IS3/IS4, COM 38/ATCP-002",desc:"Documento de análisis y propuesta del sistema de información del SDE",st:"parcial",del:"COM 38",oc:"Sin pronunciamiento",val:"ATCP-002 propone arquitectura SIG para sedes del Viceministerio."},
+    {code:"P2.1.16",fuente:"IS4/IS5",desc:"Documentación de adquisición de licencias",st:"no iniciado",del:"",oc:"",val:"Sin adquisición de licencias."},
+    {code:"P2.1.17",fuente:"COM 33, Dashboard PowerBI, IS4",desc:"Tablero gerencial general y por programa del SDE",st:"completado",del:"COM 33",oc:"Sin confirmación recepción",val:"Mejora tablero legado (+3 campos). Dashboard MIPYMEs: 151.154 empresas, 22 departamentos. Presentado a Viceministra."}
+  ]},
+  {title:"Sub 3.1.2 Fortalecimiento institucional de las sedes regionales de SDE",c:1,p:5,ni:0,items:[
+    {code:"P2.2.1",fuente:"Diagnóstico SDE, ATCP-001, COM 38/ATCP-002",desc:"Propuesta del rol de los Centros de Dinamización Económica de SDE",st:"parcial",del:"COM 38",oc:"Sin pronunciamiento",val:"Diagnóstico analiza rol territorial. ATCP-002 propone modelo one-stop-shop SDE+SFE. Pendiente pronunciamiento."},
+    {code:"P2.2.2",fuente:"Diagnóstico competencias SDE, ATCP-001, IS4",desc:"Perfil de puesto del delegado",st:"completado",del:"COM 45 (Anexo III)",oc:"Ratificado OPED 130",val:"ATCP-001 incluye perfil delegado en marco SHL."},
+    {code:"P2.2.3",fuente:"Diagnóstico SDE, IS4, COM 38/ATCP-002",desc:"Modelos de Operación de los Centros",st:"parcial",del:"COM 38",oc:"Sin pronunciamiento",val:"ATCP-002 propone modelo operación externalizado con especificaciones técnicas para licitación tercerización."},
+    {code:"P2.2.4",fuente:"IS4, COM 38/ATCP-002",desc:"Propuesta de la Estrategia Operativa por delegado de cada Centro de SDE",st:"parcial",del:"COM 38",oc:"Sin pronunciamiento",val:"ATCP-002 define evaluación integral por sede y despliegue territorial en 4 regiones (15 sedes). Pendiente pronunciamiento."},
+    {code:"P2.2.5",fuente:"Diagnóstico SDE, COM 38/ATCP-002",desc:"Propuesta de los elementos de Organización y Funciones de los Centros",st:"parcial",del:"COM 38",oc:"Sin pronunciamiento",val:"Análisis funcional con rutas de acción. ATCP-002 propone matriz RACI y modelo fortalecimiento institucional."},
+    {code:"P2.2.6",fuente:"Diagnóstico SDE, IS4, COM 38/ATCP-002",desc:"Funciones para cada Centro de SDE",st:"parcial",del:"COM 45 (Anexo I)",oc:"",val:"Análisis productividad (548 empresas/empleado/año). 9 programas identificados. Sin funciones diferenciadas por centro."}
+  ]},
+  {title:"Sub 3.1.3 Adecuación de la Unidad de Fortalecimiento al Emprendimiento",c:1,p:2,ni:1,items:[
+    {code:"P2.3.1",fuente:"Diagnóstico SDE, IS3",desc:"Establecimiento de una línea base del ecosistema emprendedor",st:"parcial",del:"COM 45 (Anexo I)",oc:"",val:"Elementos contextuales en diagnóstico. Detectadas inconsistencias, oportunidades y preguntas iniciales."},
+    {code:"P2.3.2",fuente:"Diagnóstico SDE",desc:"Documento de brechas entre cumplimiento de la Ley y la situación actual",st:"completado",del:"COM 45 (Anexo I)",oc:"Pendiente de aprobación",val:"Capítulo del Diagnóstico de la SDE (no documento separado). Análisis artículo por artículo: Ley Emprendimiento y Ley Artesanal vs situación real. Sociedades de Emprendimiento no activadas. Centros de Formación sin verificar operatividad."},
+    {code:"P2.3.3",fuente:"IS4",desc:"Propuesta de Estrategia para Potenciar la Unidad de Fortalecimiento al Emprendimiento",st:"parcial",del:"COM 45 (Anexo I)",oc:"",val:"Recomendaciones diagnóstico + ATCP-001 define emprendimiento como proceso misional. ATCP-002 propone modelo integrado UFE."},
+    {code:"P2.3.4",fuente:"Informe final proyecto",desc:"Memoria de la implementación de la Propuesta de Emprendimiento",st:"no iniciado",del:"",oc:"",val:"Sin implementación. Producto en fase diagnóstica al cierre."}
+  ]}
+];
+
+const stColor = {completado:"#059669",parcial:"#D97706","no iniciado":"#9CA3AF"};
+const stBadge = {completado:"bg-green",parcial:"bg-amber","no iniciado":"bg-red"};
+const stLabel = {completado:"COMPLETADO",parcial:"PARCIAL","no iniciado":"NO INICIADO"};
+const mlDiv = document.getElementById("ml-accordions");
+
+ml.forEach((g,gi) => {
+  let rows = "";
+  g.items.forEach(it => {
+    const ocBadge = it.oc ? (it.oc.includes("Ratificado")?`<span class="badge bg-green">${it.oc}</span>`:it.oc.includes("Sin")?`<span class="badge bg-amber">${it.oc}</span>`:`<span class="badge bg-blue">${it.oc}</span>`) : '<span style="color:#D1D5DB;font-size:8px">—</span>';
+    rows += `<tr><td style="font-weight:600;color:#1D4ED8;vertical-align:top">${it.code}</td><td style="font-size:9px;vertical-align:top">${it.desc}</td><td style="text-align:center;vertical-align:top"><span class="badge ${stBadge[it.st]}">${stLabel[it.st]}</span></td><td style="font-size:8px;color:#4B5563;vertical-align:top">${it.val||"—"}</td><td style="font-size:8px;color:#6B7280;vertical-align:top">${it.fuente||"—"}</td><td style="font-size:9px;color:#6B7280;vertical-align:top">${it.del||"—"}</td><td style="text-align:center;vertical-align:top">${ocBadge}</td></tr>`;
+  });
+
+  mlDiv.innerHTML += `<div class="acc" id="acc-${gi}">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">
+      <h4>${g.title}</h4>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="counts"><span style="color:#059669;font-weight:600">${g.c}C</span><span style="color:#D97706;font-weight:600">${g.p}P</span><span style="color:#9CA3AF;font-weight:600">${g.ni}N</span></div>
+        <span class="arrow">▶</span>
+      </div>
+    </div>
+    <div class="acc-body"><div class="tscroll"><table style="min-width:950px"><thead><tr><th>Código</th><th>Producto</th><th style="text-align:center">Estado</th><th>Valor actual (sept. 2025)</th><th style="font-size:9px">Fuente</th><th>Entrega</th><th style="text-align:center">Estado OC</th></tr></thead><tbody>${rows}</tbody></table></div></div>
+  </div>`;
+});
+
+// Correspondencia
+const corr = [
+  ["16/08/2024","COM 33","DEVPOLES","Dashboard analítico de MIPYMEs","Sin confirmación de recepción"],
+  ["17/10/2024","COM 38","DEVPOLES","Estrategia operativa sedes de dinamización económica","Sin pronunciamiento (12 meses)"],
+  ["17/10/2024","PED/685","UGPED","Sustitución del Jefe de Equipo Boris Cabrera","Inicia búsqueda de reemplazo"],
+  ["04/11/2024","PED/723","UGPED","Solicitud de modificación contractual","Base para Adenda 2"],
+  ["14/11/2024","PED/756","UGPED","No autorización de pago días octubre 2024","Diferendo contractual"],
+  ["22/11/2024","COM 40","DEVPOLES","Confirmación sustitución JdE y redistribución días","Presentación Rubén Morales"],
+  ["28/02/2025","COM 40-BIS","DEVPOLES","Presentación Ingrid Jacobs como Jefa de Equipo","Morales no aceptado"],
+  ["28/02/2025","COM 53","DEVPOLES","Informes de avance ATCPs","Entrega formal productos S4"],
+  ["30/04/2025","Adenda 2","OC/DUE","Extensión a 32 meses 15 días, Anexo V (900 días)","Plazo hasta septiembre 2025"],
+  ["05/05/2025","COM 52-BIS","DEVPOLES","Presentación oficial diagnósticos formación y SDE","Re-entrega formal"],
+  ["08/05/2025","COM 42","DEVPOLES","Ingrid Jacobs no asume el cargo","Tercera candidatura perdida"],
+  ["23/05/2025","COM 45","DEVPOLES","Presentación IS4 con productos","Entrega formal IS4"],
+  ["11/07/2025","Aprobación OC","UGPED","Aprobación perfil Otoniel Mora","Nunca refrendado por la DUE"],
+  ["07/10/2025","PED/630","UGPED","Proyección Adenda 3","Base para COM 64"],
+  ["14/10/2025","COM 64","DEVPOLES","Respuesta PED/630: micro-planificación 279 días JdE","Último intento de viabilidad"],
+  ["16/10/2025","PED/681","UGPED","Observaciones a informes semestrales","Revisión administrativa"],
+  ["17/10/2025","PED/682","UGPED","Rechazo DUE a la extensión contractual","Cierre de la vía de extensión"],
+  ["21/10/2025","COM 65","DEVPOLES","Terminación Art. 38.6 y propuesta de cierre ordenado","Fin del contrato"],
+  ["04/12/2025","PED/793","UGPED","Trazabilidad documental y devolución anticipo","Cierre administrativo"],
+  ["03/03/2026","COM 66","DEVPOLES","Solicitud de reconocimiento de servicios prestados","Reconocimiento de productos"],
+  ["06/03/2026","COM 67","DEVPOLES","Seguimiento a oficios pendientes","Seguimiento administrativo"],
+  ["23/03/2026","OPED 130","UGPED","Ratificación de 3 productos (P2.1.6, P2.1.13, P2.2.2)","Reconocimiento formal parcial"]
+];
+const ct = document.getElementById("corr-table");
+const mob = window.innerWidth < 600;
+corr.forEach(r => {
+  const isCom65 = r[1] === "COM 65";
+  ct.innerHTML += `<tr style="background:${isCom65?"#FEF2F2":""}""><td style="white-space:nowrap">${r[0]}</td><td style="font-weight:600;color:${isCom65?"#DC2626":"#1D4ED8"}">${r[1]}</td><td style="font-size:9px">${r[2]}</td><td style="font-size:9px">${r[3]}</td>${mob?"":  `<td style="font-size:9px;color:#6B7280">${r[4]}</td>`}</tr>`;
+});
+</script>
+</body>
+</html>
