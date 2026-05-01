@@ -49,6 +49,8 @@ tr{border-bottom:1px solid #E5E7EB}
 .acc{border:1px solid #E5E7EB;border-radius:8px;margin-bottom:8px;overflow:hidden}
 .acc-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;cursor:pointer;background:#F9FAFB;user-select:none}
 .acc-hdr:hover{background:#EFF6FF}
+.reveal{opacity:0;transform:translateY(16px)}
+.reveal.vis{opacity:1;transform:translateY(0);transition:opacity 0.5s ease-out,transform 0.5s ease-out}
 .acc-hdr h4{font-size:11px;font-weight:600;margin:0}
 .acc-hdr .counts{display:flex;gap:6px;font-size:9px}
 .acc-hdr .arrow{transition:transform 0.3s ease-out;font-size:10px;color:#6B7280}
@@ -57,9 +59,10 @@ tr{border-bottom:1px solid #E5E7EB}
 .tscroll table{min-width:500px}
 .fin-bar{background:#F3F4F6;border-radius:4px;height:16px;position:relative;overflow:hidden;margin-bottom:2px}
 .fin-bar>div{animation:barGrow 1.8s ease-out both}
-.sbar>div{animation:barGrow 1.6s ease-out both}
-.sbar>div:nth-child(2){animation-delay:0.25s}
-.sbar>div:nth-child(3){animation-delay:0.3s}
+.sbar>div{animation:barGrow 0.6s ease-out both;animation-play-state:paused}
+.sbar.animate>div{animation-play-state:running}
+.sbar>div:nth-child(2){animation-delay:0.15s}
+.sbar>div:nth-child(3){animation-delay:0.25s}
 @keyframes barGrow{from{max-width:0;opacity:0.3}to{max-width:100%;opacity:1}}
 @keyframes growUp{from{transform:scaleY(0);opacity:0.3}to{transform:scaleY(1);opacity:1}}
 .kpi{animation:fadeUp 1.4s ease-out both}
@@ -440,7 +443,7 @@ sems.forEach(s => {
   ["ep1","ep2","sr","jr"].forEach((k,j) => {
     if (s[k] > 0) {
       const ht = s[k]/196*90;
-      h += `<div style="width:100%;height:${ht}px;background:${cols[k]};display:flex;align-items:center;justify-content:center;animation:growUp 0.5s ease-out both;animation-delay:${0.12*segDelay}s;transform-origin:bottom"><span style="font-size:7px;font-weight:600;color:#fff">${s[k]}</span></div>`;
+      h += `<div style="width:100%;height:${ht}px;background:${cols[k]};display:flex;align-items:center;justify-content:center;animation:growUp 0.5s ease-out both;animation-delay:${(0.55*segDelay).toFixed(2)}s;transform-origin:bottom"><span style="font-size:7px;font-weight:600;color:#fff;animation:fadeIn 0.3s ease-out both;animation-delay:${(0.55*segDelay+0.3).toFixed(2)}s">${s[k]}</span></div>`;
       segDelay++;
     }
   });
@@ -449,40 +452,6 @@ sems.forEach(s => {
   chart.innerHTML += h;
 });
 
-// Subactivity bars
-const subs = [
-  {n:"Sub 2.2.1 Diagnóstico formación",c:2,p:0,ni:2,t:4},
-  {n:"Sub 2.2.2 Propuesta aprendices",c:3,p:1,ni:0,t:4},
-  {n:"Sub 3.1.1 Fortalecimiento institucional SDE",c:4,p:8,ni:5,t:17},
-  {n:"Sub 3.1.2 Sedes regionales",c:1,p:5,ni:0,t:6},
-  {n:"Sub 3.1.3 Emprendimiento",c:1,p:2,ni:1,t:4}
-];
-const sb = document.getElementById("sub-bars");
-subs.forEach(s => {
-  sb.innerHTML += `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="font-weight:600">${s.n}</span><span style="color:#6B7280">${s.c}/${s.t}</span></div><div class="sbar" style="height:14px"><div style="width:${s.c/s.t*100}%;background:#059669"></div><div style="width:${s.p/s.t*100}%;background:#F59E0B"></div><div style="width:${s.ni/s.t*100}%;background:#D1D5DB"></div></div></div>`;
-});
-
-// Products table
-const prods = [
-  ["P1.1.1","Diagnóstico de sectores con necesidades de formación","COM 45","Oct 2024","pendiente"],
-  ["P1.1.2","Plan de trabajo oferta formación técnica en espacio laboral","COM 45","Oct 2024","pendiente"],
-  ["P1.2.1","Propuesta de formación de aprendices estandarizada","COM 45","Dic 2024","pendiente"],
-  ["P1.2.2","Memorias AT marco legal, contractual, incentivos","COM 53","Feb 2025","pendiente"],
-  ["P1.2.4","Currículos formativos con módulos de competencias","COM 45","Ene 2025","pendiente"],
-  ["P2.1.1","Diagnóstico por Programa/Sede y Memoria de resultados","COM 45","Oct 2024","pendiente"],
-  ["P2.1.6","Propuesta de perfil de puestos","COM 45","Oct 2024","ratificado"],
-  ["P2.1.13","Memorias de talleres de competencias blandas","COM 45","Oct 2024","ratificado"],
-  ["P2.1.17","Tablero gerencial general y por programa del SDE","COM 33","Ago 2024","sin_resp"],
-  ["P2.2.2","Perfil de puesto del delegado","COM 45","Oct 2024","ratificado"],
-  ["P2.3.2","Documento de brechas Ley vs situación actual (capítulo del Diagnóstico SDE)","COM 45","Oct 2024","pendiente"]
-];
-const pt = document.getElementById("prod-table");
-prods.forEach(p => {
-  const badge = p[4]==="ratificado"?`<span class="badge bg-green">RATIFICADO OPED 130</span>`:p[4]==="sin_resp"?`<span class="badge bg-amber">SIN RESPUESTA</span>`:`<span class="badge bg-blue">PENDIENTE APROBACIÓN</span>`;
-  pt.innerHTML += `<tr><td style="font-weight:600;color:#1D4ED8">${p[0]}</td><td style="font-size:9px">${p[1]}</td><td style="font-size:9px;color:#6B7280">${p[2]}</td><td style="font-size:9px;white-space:nowrap">${p[3]}</td><td style="text-align:center">${badge}</td></tr>`;
-});
-
-// Marco Lógico accordions
 const ml = [
   {title:"Sub 2.2.1 Diagnóstico de sectores con necesidades de formación",c:2,p:0,ni:2,items:[
     {code:"P1.1.1",fuente:"Diagnóstico sectores, IS4, socialización UGPED",desc:"Diagnóstico de sectores con necesidades de formación",st:"completado",del:"COM 45 (Anexo II)",oc:"Pendiente de aprobación",val:"6 sectores priorizados, 4 departamentos, 32 actores consultados. Encuestas de demanda laboral y oferta formativa diseñadas."},
@@ -530,6 +499,60 @@ const ml = [
     {code:"P2.3.4",fuente:"Informe final proyecto",desc:"Memoria de la implementación de la Propuesta de Emprendimiento",st:"no iniciado",del:"",oc:"",val:"Sin implementación. Producto en fase diagnóstica al cierre."}
   ]}
 ];
+// Subactivity accordions with products
+const subs = [
+  {n:"Sub 2.2.1 Diagnóstico formación",c:2,p:0,ni:2,t:4},
+  {n:"Sub 2.2.2 Propuesta aprendices",c:3,p:1,ni:0,t:4},
+  {n:"Sub 3.1.1 Fortalecimiento institucional SDE",c:4,p:8,ni:5,t:17},
+  {n:"Sub 3.1.2 Sedes regionales",c:1,p:5,ni:0,t:6},
+  {n:"Sub 3.1.3 Emprendimiento",c:1,p:2,ni:1,t:4}
+];
+const sb = document.getElementById("sub-bars");
+const stBg = {completado:"bg-green",parcial:"bg-amber","no iniciado":"bg-red"};
+const stLb = {completado:"COMPLETADO",parcial:"PARCIAL","no iniciado":"NO INICIADO"};
+subs.forEach((s,si) => {
+  const items = ml[si].items;
+  let rows = "";
+  items.forEach(it => {
+    const ocBdg = it.oc ? (it.oc.includes("Ratificado")?`<span class="badge bg-green">${it.oc}</span>`:it.oc.includes("Sin")?`<span class="badge bg-amber">${it.oc}</span>`:`<span class="badge bg-blue">${it.oc}</span>`) : '<span style="color:#D1D5DB;font-size:8px">—</span>';
+    rows += `<tr><td style="font-weight:600;color:#1D4ED8">${it.code}</td><td style="font-size:9px">${it.desc}</td><td style="text-align:center"><span class="badge ${stBg[it.st]}">${stLb[it.st]}</span></td><td style="font-size:9px;color:#6B7280">${it.del||"—"}</td><td style="text-align:center">${ocBdg}</td></tr>`;
+  });
+  sb.innerHTML += `<div class="acc" id="psub-${si}">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">
+      <div style="flex:1;margin-right:10px">
+        <h4 style="margin-bottom:4px">${s.n}</h4>
+        <div class="sbar" style="height:10px"><div style="width:${s.c/s.t*100}%;background:#059669"></div><div style="width:${s.p/s.t*100}%;background:#F59E0B"></div><div style="width:${s.ni/s.t*100}%;background:#D1D5DB"></div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="counts"><span style="color:#059669;font-weight:600">${s.c}C</span><span style="color:#D97706;font-weight:600">${s.p}P</span><span style="color:#9CA3AF;font-weight:600">${s.ni}N</span></div>
+        <span class="arrow">▶</span>
+      </div>
+    </div>
+    <div class="acc-body"><div class="tscroll"><table style="min-width:600px"><thead><tr><th>Código</th><th>Producto</th><th style="text-align:center">Estado</th><th>Entrega</th><th style="text-align:center">Estado OC</th></tr></thead><tbody>${rows}</tbody></table></div></div>
+  </div>`;
+});
+
+// Products table
+const prods = [
+  ["P1.1.1","Diagnóstico de sectores con necesidades de formación","COM 45","Oct 2024","pendiente"],
+  ["P1.1.2","Plan de trabajo oferta formación técnica en espacio laboral","COM 45","Oct 2024","pendiente"],
+  ["P1.2.1","Propuesta de formación de aprendices estandarizada","COM 45","Dic 2024","pendiente"],
+  ["P1.2.2","Memorias AT marco legal, contractual, incentivos","COM 53","Feb 2025","pendiente"],
+  ["P1.2.4","Currículos formativos con módulos de competencias","COM 45","Ene 2025","pendiente"],
+  ["P2.1.1","Diagnóstico por Programa/Sede y Memoria de resultados","COM 45","Oct 2024","pendiente"],
+  ["P2.1.6","Propuesta de perfil de puestos","COM 45","Oct 2024","ratificado"],
+  ["P2.1.13","Memorias de talleres de competencias blandas","COM 45","Oct 2024","ratificado"],
+  ["P2.1.17","Tablero gerencial general y por programa del SDE","COM 33","Ago 2024","sin_resp"],
+  ["P2.2.2","Perfil de puesto del delegado","COM 45","Oct 2024","ratificado"],
+  ["P2.3.2","Documento de brechas Ley vs situación actual (capítulo del Diagnóstico SDE)","COM 45","Oct 2024","pendiente"]
+];
+const pt = document.getElementById("prod-table");
+prods.forEach(p => {
+  const badge = p[4]==="ratificado"?`<span class="badge bg-green">RATIFICADO OPED 130</span>`:p[4]==="sin_resp"?`<span class="badge bg-amber">SIN RESPUESTA</span>`:`<span class="badge bg-blue">PENDIENTE APROBACIÓN</span>`;
+  pt.innerHTML += `<tr><td style="font-weight:600;color:#1D4ED8">${p[0]}</td><td style="font-size:9px">${p[1]}</td><td style="font-size:9px;color:#6B7280">${p[2]}</td><td style="font-size:9px;white-space:nowrap">${p[3]}</td><td style="text-align:center">${badge}</td></tr>`;
+});
+
+// Marco Lógico accordions
 
 const stColor = {completado:"#059669",parcial:"#D97706","no iniciado":"#9CA3AF"};
 const stBadge = {completado:"bg-green",parcial:"bg-amber","no iniciado":"bg-red"};
@@ -585,6 +608,41 @@ const mob = window.innerWidth < 600;
 corr.forEach(r => {
   const isCom65 = r[1] === "COM 65";
   ct.innerHTML += `<tr style="background:${isCom65?"#FEF2F2":""}""><td style="white-space:nowrap">${r[0]}</td><td style="font-weight:600;color:${isCom65?"#DC2626":"#1D4ED8"}">${r[1]}</td><td style="font-size:9px">${r[2]}</td><td style="font-size:9px">${r[3]}</td>${mob?"":  `<td style="font-size:9px;color:#6B7280">${r[4]}</td>`}</tr>`;
+});
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.oe-card, .panel .sec:nth-child(n+3), .panel .kpis').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+  io.observe(el);
+});
+const barObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('animate'); barObs.unobserve(e.target); }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.sbar').forEach(el => barObs.observe(el));
+// Also re-trigger on tab switch
+document.getElementById("tabs").addEventListener("click", () => {
+  setTimeout(() => {
+    document.querySelectorAll('.panel.on .oe-card, .panel.on .sec:nth-child(n+2), .panel.on .kpis').forEach(el => {
+      if (!el.style.opacity || el.style.opacity === '0') {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
+        el.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+        io.observe(el);
+      }
+    });
+    document.querySelectorAll('.panel.on .sbar:not(.animate)').forEach(el => barObs.observe(el));
+  }, 50);
 });
 </script>
 </body>
