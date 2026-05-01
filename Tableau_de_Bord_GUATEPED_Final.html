@@ -515,7 +515,7 @@ subs.forEach((s,si) => {
   let rows = "";
   items.forEach(it => {
     const ocBdg = it.oc ? (it.oc.includes("Ratificado")?`<span class="badge bg-green">${it.oc}</span>`:it.oc.includes("Sin")?`<span class="badge bg-amber">${it.oc}</span>`:`<span class="badge bg-blue">${it.oc}</span>`) : '<span style="color:#D1D5DB;font-size:8px">—</span>';
-    rows += `<tr><td style="font-weight:600;color:#1D4ED8">${it.code}</td><td style="font-size:9px">${it.desc}</td><td style="text-align:center"><span class="badge ${stBg[it.st]}">${stLb[it.st]}</span></td><td style="font-size:9px;color:#6B7280">${it.del||"—"}</td><td style="text-align:center">${ocBdg}</td></tr>`;
+    rows += `<tr><td style="font-weight:600;color:#1D4ED8">${it.code}</td><td style="font-size:9px">${it.desc}</td><td style="text-align:center"><span class="badge ${stBg[it.st]}">${stLb[it.st]}</span></td><td style="font-size:7.5px;color:#6B7280;white-space:nowrap">${it.del||"—"}</td><td style="text-align:center">${ocBdg}</td></tr>`;
   });
   sb.innerHTML += `<div class="acc" id="psub-${si}">
     <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">
