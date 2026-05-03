@@ -9,16 +9,16 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Montserrat',sans-serif;background:#F9FAFB;color:#1B2A4A}
 .page{max-width:840px;margin:0 auto;padding:16px}
-.hdr{background:linear-gradient(135deg,#0F172A,#1E3A8C);border-radius:10px 10px 0 0;padding:16px 20px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.hdr{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;color:#001489;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;border-bottom:3px solid #001489;border-left:1px solid #E5E7EB;border-right:1px solid #E5E7EB;border-top:1px solid #E5E7EB}
 .hdr-left{display:flex;align-items:center;gap:12px}
-.hdr-left img{width:36px;height:36px;border-radius:6px}
-.hdr .sup{font-size:9px;font-weight:600;letter-spacing:0.08em;opacity:0.7}
-.hdr h1{font-size:19px;font-weight:800;letter-spacing:-0.01em;margin-top:2px}
-.hdr .sub{font-size:10px;opacity:0.8;margin-top:2px}
-.kpis-h{display:flex;gap:14px;flex-wrap:wrap}
-.kpis-h>div{text-align:center}
-.kpis-h .v{font-size:18px;font-weight:600}
-.kpis-h .l{font-size:7px;opacity:0.7;margin-top:1px}
+.hdr-left img{width:34px;height:34px;border-radius:4px}
+.hdr .sup{font-size:8px;font-weight:600;letter-spacing:0.06em;color:#6B7280}
+.hdr h1{font-size:16px;font-weight:800;letter-spacing:-0.01em;margin-top:1px;color:#001489}
+.hdr .sub{font-size:9px;color:#6B7280;margin-top:1px}
+.kpis-h{display:flex;gap:8px;flex-wrap:wrap}
+.kpis-h>div{text-align:center;padding:5px 12px;background:#EEF2FF;border-radius:6px}
+.kpis-h .v{font-size:14px;font-weight:600;color:#001489}
+.kpis-h .l{font-size:7px;color:#4B5563;margin-top:1px}
 .tabs{display:flex;background:#fff;border-left:1px solid #E5E7EB;border-right:1px solid #E5E7EB;overflow-x:auto}
 .tabs button{flex:1;min-width:60px;padding:8px 4px;font-size:10px;font-weight:400;font-family:'Montserrat';background:#fff;color:#6B7280;border:none;border-bottom:1px solid #E5E7EB;cursor:pointer;white-space:nowrap}
 .tabs button.on{font-weight:600;background:#EFF6FF;color:#1D4ED8;border-bottom:2px solid #2563EB}
@@ -85,8 +85,9 @@ tr{border-bottom:1px solid #E5E7EB}
 @media(max-width:600px){
   .page{padding:8px}
   .hdr{padding:12px 14px;flex-direction:column;align-items:flex-start}
-  .hdr h1{font-size:15px}
-  .kpis-h .v{font-size:14px}
+  .hdr h1{font-size:14px}
+  .kpis-h .v{font-size:12px}
+  .kpis-h>div{padding:4px 8px}
   .content{padding:14px;min-height:300px}
   .tabs button{font-size:8px;padding:6px 2px}
   th,td{padding:4px 5px;font-size:8px}
@@ -347,40 +348,58 @@ tr{border-bottom:1px solid #E5E7EB}
       </div>
     </div>
 
-    <div style="margin-top:16px;border:1px solid #E5E7EB;border-radius:8px;padding:16px;background:#F9FAFB">
+    <div style="margin-top:16px">
       <h4 style="font-size:11px;font-weight:600;color:#1B2A4A;margin-bottom:10px">Supuestos del marco lógico</h4>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div>
-          <div style="font-size:9px;font-weight:600;color:#1D4ED8;margin-bottom:4px">Supuestos a nivel de efectos (OE1 y OE2)</div>
-          <div style="font-size:9px;color:#4B5563;line-height:1.6">
-            1. El sector privado mantiene la voluntad de participar en alianzas para la formación.<br>
-            2. La coyuntura sociopolítica y económica no dificulta la contratación.<br>
-            3. INTECAP y MINEDUC mantienen disposición para la colaboración.<br>
-            4. Existe compromiso político ministerial con la Política Nacional de Empleo Digno.<br>
-            5. La dirección de la SDE está abierta a los cambios organizativos propuestos.<br>
-            6. Las MIPYMEs mantienen demanda activa de servicios de desarrollo empresarial.<br>
-            7. El apoyo institucional del Programa facilita la implementación.
+      <div style="display:flex;flex-direction:column;gap:10px">
+
+        <div style="border-radius:8px;border:1px solid #C7D2FE;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#EEF2FF">
+            <span style="background:#0B2478;color:#fff;font-size:8px;font-weight:600;letter-spacing:0.06em;padding:3px 8px;border-radius:4px">EFECTOS</span>
+            <span style="font-size:9px;font-weight:600;color:#0B2478">Supuestos a nivel de objetivos específicos</span>
+            <span style="font-size:8px;color:#6B7280;margin-left:auto">7 supuestos</span>
+          </div>
+          <div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Sector privado mantiene voluntad en alianzas</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Coyuntura sociopolítica no dificulta contratación</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">INTECAP y MINEDUC mantienen disposición</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Compromiso político ministerial con la PNED</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Dirección SDE abierta a cambios organizativos</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">MIPYMEs mantienen demanda activa</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Apoyo institucional del Programa</span>
           </div>
         </div>
-        <div>
-          <div style="font-size:9px;font-weight:600;color:#047857;margin-bottom:4px">Supuestos a nivel de actividades</div>
-          <div style="font-size:9px;color:#4B5563;line-height:1.6">
-            1. La estabilidad política y social permite la ejecución de las actividades.<br>
-            2. El Programa de Empleo Digno y MINECO facilitan las instalaciones y la logística.<br>
-            3. Los expertos se movilizan según el calendario acordado.<br>
-            4. La coordinación interinstitucional se mantiene operativa.<br>
-            5. Se garantiza la continuidad del personal técnico ministerial.
+
+        <div style="border-radius:8px;border:1px solid #B2DFDB;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#E0F2F1">
+            <span style="background:#1B4965;color:#fff;font-size:8px;font-weight:600;letter-spacing:0.06em;padding:3px 8px;border-radius:4px">PRODUCTOS</span>
+            <span style="font-size:9px;font-weight:600;color:#1B4965">Supuestos a nivel de entregables</span>
+            <span style="font-size:8px;color:#6B7280;margin-left:auto">6 supuestos</span>
           </div>
-          <div style="font-size:9px;font-weight:600;color:#6B7280;margin-top:10px;margin-bottom:4px">Supuestos a nivel de productos</div>
-          <div style="font-size:9px;color:#4B5563;line-height:1.6">
-            1. Los actores clave participan activamente.<br>
-            2. MINECO y la SDE facilitan acceso a la información.<br>
-            3. Viabilidad jurídica para la revisión del marco legal de formación de aprendices.<br>
-            4. El personal de la SDE participa en los procesos de fortalecimiento.<br>
-            5. La dirección de la SDE asume las propuestas formuladas.<br>
-            6. El apoyo institucional del Programa facilita la implementación.
+          <div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Actores clave participan activamente</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">MINECO/SDE facilita acceso a la información</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Viabilidad jurídica para revisión marco legal aprendices</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Personal SDE participa en fortalecimiento</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Dirección SDE asume propuestas formuladas</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Apoyo institucional del Programa</span>
           </div>
         </div>
+
+        <div style="border-radius:8px;border:1px solid #E5E7EB;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#F5F5F0">
+            <span style="background:#5B6B5E;color:#fff;font-size:8px;font-weight:600;letter-spacing:0.06em;padding:3px 8px;border-radius:4px">ACTIVIDADES</span>
+            <span style="font-size:9px;font-weight:600;color:#5B6B5E">Supuestos a nivel de medios y recursos</span>
+            <span style="font-size:8px;color:#6B7280;margin-left:auto">5 supuestos</span>
+          </div>
+          <div style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Estabilidad política y social permite ejecución</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">PED/MINECO facilita instalaciones y logística</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Expertos se movilizan según calendario</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Coordinación interinstitucional operativa</span>
+            <span style="font-size:8px;color:#374151;background:#FAFAFA;border:1px solid #E8E8E8;border-radius:12px;padding:4px 10px;line-height:1.4">Continuidad del personal técnico ministerial</span>
+          </div>
+        </div>
+
       </div>
     </div>
 
