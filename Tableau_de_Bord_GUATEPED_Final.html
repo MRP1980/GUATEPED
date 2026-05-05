@@ -8,15 +8,15 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Montserrat',sans-serif;background:#F9FAFB;color:#1B2A4A}
-.page{max-width:840px;margin:0 auto;padding:16px}
+.page{max-width:960px;margin:0 auto;padding:16px}
 .hdr{background:#fff;border-radius:10px 10px 0 0;padding:16px 20px;color:#001489;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;border-bottom:3px solid #001489;border-left:1px solid #E5E7EB;border-right:1px solid #E5E7EB;border-top:1px solid #E5E7EB}
 .hdr-left{display:flex;align-items:center;gap:12px}
 .hdr-left img{width:34px;height:34px;border-radius:4px}
 .hdr .sup{font-size:8px;font-weight:600;letter-spacing:0.06em;color:#6B7280}
 .hdr h1{font-size:16px;font-weight:800;letter-spacing:-0.01em;margin-top:1px;color:#001489}
 .hdr .sub{font-size:9px;color:#6B7280;margin-top:1px}
-.kpis-h{display:flex;gap:8px;flex-wrap:wrap}
-.kpis-h>div{text-align:center;padding:5px 12px;background:#EEF2FF;border-radius:6px}
+.kpis-h{display:flex;gap:8px;flex-wrap:nowrap}
+.kpis-h>div{text-align:center;padding:5px 8px;background:#EEF2FF;border-radius:6px;flex:1;min-width:0}
 .kpis-h .v{font-size:14px;font-weight:600;color:#001489}
 .kpis-h .l{font-size:7px;color:#4B5563;margin-top:1px}
 .tabs{display:flex;background:#fff;border-left:1px solid #E5E7EB;border-right:1px solid #E5E7EB;overflow-x:auto}
@@ -84,8 +84,8 @@ tr{border-bottom:1px solid #E5E7EB}
 .acc.open .acc-body{max-height:2000px;padding:0 14px 10px}
 @media(max-width:768px){
   .hdr{flex-direction:column;align-items:flex-start;gap:10px;padding:14px 16px}
-  .kpis-h{width:100%;justify-content:space-between}
-  .kpis-h>div{flex:1;min-width:0}
+  .kpis-h{width:100%}
+  .kpis-h>div{flex:1;min-width:0;padding:4px 6px}
 }
 @media(max-width:600px){
   .page{padding:6px}
@@ -95,10 +95,10 @@ tr{border-bottom:1px solid #E5E7EB}
   .hdr .sup{font-size:6.5px;letter-spacing:0.04em}
   .hdr h1{font-size:12px;letter-spacing:0}
   .hdr .sub{font-size:7.5px}
-  .kpis-h{gap:4px;width:100%;flex-wrap:wrap}
-  .kpis-h>div{flex:1 1 22%;min-width:0;padding:4px 6px;border-radius:4px}
-  .kpis-h .v{font-size:10px}
-  .kpis-h .l{font-size:5.5px}
+  .kpis-h{gap:3px;width:100%}
+  .kpis-h>div{padding:4px 3px;border-radius:4px}
+  .kpis-h .v{font-size:9px}
+  .kpis-h .l{font-size:5px}
   .content{padding:10px;min-height:280px}
   .tabs{border-radius:0}
   .tabs button{font-size:7.5px;padding:6px 2px}
@@ -118,9 +118,38 @@ tr{border-bottom:1px solid #E5E7EB}
 @media(max-width:380px){
   .hdr h1{font-size:11px}
   .hdr .sup{font-size:6px}
-  .kpis-h>div{flex:1 1 45%;padding:3px 4px}
-  .kpis-h .v{font-size:9px}
+  .kpis-h>div{padding:3px 2px}
+  .kpis-h .v{font-size:8px}
   .tabs button{font-size:7px;padding:5px 1px}
+}
+@media(min-width:1200px){
+  .page{max-width:1100px;padding:24px}
+  .hdr{padding:20px 28px;gap:16px}
+  .hdr-left img{width:42px;height:42px;border-radius:5px}
+  .hdr .sup{font-size:9px;letter-spacing:0.08em}
+  .hdr h1{font-size:20px}
+  .hdr .sub{font-size:10px}
+  .kpis-h{gap:10px}
+  .kpis-h>div{padding:7px 14px;border-radius:8px}
+  .kpis-h .v{font-size:17px}
+  .kpis-h .l{font-size:8px}
+  .content{padding:28px}
+  .tabs button{font-size:11px;padding:10px 6px}
+  .sec h3{font-size:14px}
+  .kpi .v{font-size:22px}
+  .kpi .l,.kpi .s{font-size:9px}
+}
+@media(min-width:1600px){
+  .page{max-width:1280px;padding:32px}
+  .hdr{padding:24px 36px}
+  .hdr-left img{width:48px;height:48px}
+  .hdr h1{font-size:24px}
+  .hdr .sup{font-size:10px}
+  .kpis-h .v{font-size:20px}
+  .kpis-h .l{font-size:9px}
+  .kpis-h>div{padding:8px 18px}
+  .content{padding:36px}
+  .sec h3{font-size:15px}
 }
 </style>
 </head>
@@ -137,10 +166,10 @@ tr{border-bottom:1px solid #E5E7EB}
   </div>
   <div class="kpis-h">
     <div><div class="v">343.173 €</div><div class="l">Ejecutado</div></div>
-    <div><div class="v">41,9%</div><div class="l">% Ejecución</div></div>
-    <div><div class="v">539</div><div class="l">Días consumidos</div></div>
+    <div><div class="v">41,9%</div><div class="l">Ejecución</div></div>
+    <div><div class="v">539</div><div class="l">Días</div></div>
     <div><div class="v">59,9%</div><div class="l">% Días</div></div>
-    <div><div class="v">18/33</div><div class="l">Meses activos</div></div>
+    <div><div class="v">18/32</div><div class="l">Meses</div></div>
   </div>
 </div>
 
@@ -167,7 +196,7 @@ tr{border-bottom:1px solid #E5E7EB}
       <div class="leg"><span><i style="background:#059669"></i>5 completados</span><span><i style="background:#F59E0B"></i>1 parcial</span><span><i style="background:#D1D5DB"></i>2 no iniciados</span><span style="margin-left:auto;font-weight:600;color:#374151">8 indicadores</span></div>
       <div class="oe-grid">
         <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Efectos alcanzados</div><div style="font-size:10px">E1.1 Diagnóstico ✓ · E1.2 Modelo ✓</div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-top:10px;margin-bottom:3px">No ejecutado</div><div style="font-size:10px">El piloto de 165 aprendices no pudo ejecutarse. El modelo fue diseñado, socializado y validado pero la fase de implementación no se inició por ausencia de Jefe de Equipo refrendado.</div></div>
-        <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Valoración final</div><div style="font-size:10px;font-style:italic">Fase de diseño completada con éxito. Modelo listo para implementación por cualquier actor institucional (INTECAP, MINTRAB, CONED, sector privado). La inversión en diseño se preserva como patrimonio técnico del país.</div></div>
+        <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Valoración final</div><div style="font-size:10px;font-style:italic">Fase de diseño con hoja de ruta para la implementación completada con éxito. Modelo listo para implementación. La inversión de la UE en el diseño se preserva como patrimonio técnico del país.</div></div>
       </div>
     </div>
     <div class="oe-card oe2">
@@ -179,7 +208,7 @@ tr{border-bottom:1px solid #E5E7EB}
       <div class="leg"><span><i style="background:#059669"></i>6 completados</span><span><i style="background:#F59E0B"></i>15 parcial</span><span><i style="background:#D1D5DB"></i>6 no iniciados</span><span style="margin-left:auto;font-weight:600;color:#374151">27 indicadores</span></div>
       <div class="oe-grid">
         <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Efectos alcanzados</div><div style="font-size:10px">E2.1 Parcial, 4 capas de información establecidas</div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-top:10px;margin-bottom:3px">No ejecutado</div><div style="font-size:10px">Implementación del modelo SDE, fortalecimiento de sedes, sistema de información gerencial y componente de seguimiento y evaluación. La COM 38 nunca recibió pronunciamiento del beneficiario (12 meses de espera).</div></div>
-        <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Valoración final</div><div style="font-size:10px;font-style:italic">Fase diagnóstica completa. Productos utilizables por el Viceministerio de la MIPYME sin necesidad del contratista. El Dashboard de MIPYMEs (151.154 empresas georreferenciadas) y el diagnóstico organizacional quedan como herramientas operativas.</div></div>
+        <div><div style="font-size:9px;font-weight:600;color:#6B7280;text-transform:uppercase;margin-bottom:3px">Valoración final</div><div style="font-size:10px;font-style:italic">Fase diagnóstica completa. Productos utilizables por el Viceministerio de la MIPYME. El Dashboard de MIPYMEs (151.154 empresas georreferenciadas) y el diagnóstico organizacional quedan como herramientas operativas de datos para la toma de decisiones y gestión del cambio.</div></div>
       </div>
     </div>
   </div>
@@ -188,12 +217,12 @@ tr{border-bottom:1px solid #E5E7EB}
   <div class="sec">
     <h3>Distribución temporal del contrato</h3>
     <div style="display:flex;gap:6px;margin-bottom:6px">
-      <div class="kpi" style="border-top-color:#059669;flex:54.5;min-width:0"><div class="v" style="color:#059669">18</div><div class="l">Meses activos</div><div class="s">54,5%</div></div>
-      <div class="kpi" style="border-top-color:#DC2626;flex:45.5;min-width:0"><div class="v" style="color:#DC2626">15</div><div class="l">Meses de hiato</div><div class="s">45,5%</div></div>
+      <div class="kpi" style="border-top-color:#059669;flex:56.3;min-width:0"><div class="v" style="color:#059669">18</div><div class="l">Meses activos</div><div class="s">56,3%</div></div>
+      <div class="kpi" style="border-top-color:#DC2626;flex:43.8;min-width:0"><div class="v" style="color:#DC2626">14</div><div class="l">Meses de hiato</div><div class="s">43,8%</div></div>
     </div>
     <div class="sbar" style="height:24px">
-      <div style="width:54.5%;background:#059669"><span>54,5%</span></div>
-      <div style="width:45.5%;background:#EF4444"><span>45,5%</span></div>
+      <div style="width:56.3%;background:#059669"><span>56%</span></div>
+      <div style="width:43.8%;background:#EF4444"><span>44%</span></div>
     </div>
     <div style="display:flex;gap:12px;justify-content:center;margin-top:6px;flex-wrap:wrap">
       <span style="display:flex;align-items:center;gap:4px;font-size:8px;color:#6B7280"><i class="leg" style="width:10px;height:10px;border-radius:2px;background:#059669;display:inline-block"></i>Actividad efectiva</span>
@@ -220,9 +249,9 @@ tr{border-bottom:1px solid #E5E7EB}
         <div style="flex:3;background:#6BBF8A;display:flex;align-items:center;justify-content:center">
           <span style="font-size:6px;font-weight:600;color:#fff;font-family:Montserrat">GO↓</span>
         </div>
-        <div style="flex:8;background:#DC2626;border-radius:0 4px 4px 0;display:flex;align-items:center;justify-content:center;gap:4px">
+        <div style="flex:7;background:#DC2626;border-radius:0 4px 4px 0;display:flex;align-items:center;justify-content:center;gap:4px">
           <span style="font-size:8px;font-weight:600;color:#fff;font-family:Montserrat">STOP</span>
-          <span style="font-size:7px;color:rgba(255,255,255,0.8);font-family:Montserrat">8 m</span>
+          <span style="font-size:7px;color:rgba(255,255,255,0.8);font-family:Montserrat">7 m</span>
         </div>
       </div>
       <div style="display:flex;gap:2px;font-size:6.5px;color:#6B7280;font-family:Montserrat">
@@ -230,7 +259,7 @@ tr{border-bottom:1px solid #E5E7EB}
         <div style="flex:7;text-align:center">M6–M13</div>
         <div style="flex:9;text-align:center">M13–M22</div>
         <div style="flex:3;text-align:center">M22–M25</div>
-        <div style="flex:8;text-align:center">M25–M32</div>
+        <div style="flex:7;text-align:center">M25–M32</div>
       </div>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
@@ -251,14 +280,14 @@ tr{border-bottom:1px solid #E5E7EB}
         <div style="font-size:7.5px;color:#374151;font-family:Montserrat;line-height:1.5">Sin JdE desde octubre 2024. Cierre de ATCP-001, ATCP-002 y ATCP-003. Misión presencial de backstopping para agilizar procesos y toma de decisiones con la UGPED.</div>
       </div>
       <div style="flex:1;min-width:140px;background:#FEF2F2;border-radius:6px;padding:8px 10px;border-left:3px solid #DC2626">
-        <div style="font-size:7px;font-weight:600;color:#DC2626;font-family:Montserrat;margin-bottom:2px">TRAMO 5 · STOP · 8 meses</div>
+        <div style="font-size:7px;font-weight:600;color:#DC2626;font-family:Montserrat;margin-bottom:2px">TRAMO 5 · STOP · 7 meses</div>
         <div style="font-size:7.5px;color:#374151;font-family:Montserrat;line-height:1.5">JdE vacante. Morales no aceptado, Jacobs perdida, Mora no refrendado. Adenda 3 rechazada por la DUE.</div>
       </div>
     </div>
     <div style="display:flex;gap:12px;justify-content:center;font-size:8px;font-family:Montserrat;color:#6B7280;flex-wrap:wrap">
       <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#059669;display:inline-block"></span>Actividad (15 m)</span>
       <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#6BBF8A;display:inline-block"></span>Actividad ralentizada (3 m)</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#DC2626;display:inline-block"></span>Parálisis forzosa (15 m)</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#DC2626;display:inline-block"></span>Parálisis forzosa (14 m)</span>
     </div>
   </div>
 
@@ -290,7 +319,7 @@ tr{border-bottom:1px solid #E5E7EB}
     <h3>Estado del anticipo</h3>
     <div class="kpis">
       <div class="kpi" style="border-top-color:#374151"><div class="v">163.998 €</div><div class="l">Prefinanciación recibida</div><div class="s">Mes 1 del contrato</div></div>
-      <div class="kpi" style="border-top-color:#1D4ED8"><div class="v">115.690 €</div><div class="l">Reclamado en factura S4</div><div class="s">Única factura emitida</div></div>
+      <div class="kpi" style="border-top-color:#1D4ED8"><div class="v">115.690 €</div><div class="l">Reclamado en factura S4</div><div class="s">Última factura</div></div>
       <div class="kpi" style="border-top-color:#DC2626"><div class="v">48.308 €</div><div class="l">Pendiente de devolución</div><div class="s">163.998 − 115.690</div></div>
     </div>
   </div>
@@ -302,7 +331,7 @@ tr{border-bottom:1px solid #E5E7EB}
     <div class="kpi" style="border-top-color:#1D4ED8"><div class="v">539</div><div class="l">Días ejecutados</div><div class="s">de 900 presupuestados</div></div>
     <div class="kpi" style="border-top-color:#DC2626"><div class="v">361</div><div class="l">No ejecutados</div><div class="s">164 JdE + 11 Sr + 186 Jr</div></div>
     <div class="kpi" style="border-top-color:#374151"><div class="v">59,9%</div><div class="l">% Ejecución días</div></div>
-    <div class="kpi" style="border-top-color:#D97706"><div class="v">18/33</div><div class="l">Meses activos / totales</div></div>
+    <div class="kpi" style="border-top-color:#D97706"><div class="v">18/32</div><div class="l">Meses activos / totales</div></div>
   </div>
 
   <div class="sec">
