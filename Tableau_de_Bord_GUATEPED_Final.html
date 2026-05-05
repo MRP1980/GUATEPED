@@ -16,8 +16,8 @@ body{font-family:'Montserrat',sans-serif;background:#F9FAFB;color:#1B2A4A}
 .hdr h1{font-size:16px;font-weight:800;letter-spacing:-0.01em;margin-top:1px;color:#001489}
 .hdr .sub{font-size:9px;color:#6B7280;margin-top:1px}
 .kpis-h{display:flex;gap:6px;flex-wrap:nowrap;align-items:stretch}
-.kpis-h>div{text-align:center;padding:5px 10px;background:#EEF2FF;border-radius:6px;white-space:nowrap}
-.kpis-h .v{font-size:14px;font-weight:600;color:#001489}
+.kpis-h>div{text-align:center;padding:5px 10px;background:#EEF2FF;border-radius:6px;white-space:nowrap;flex:1;min-width:0}
+.kpis-h .v{font-size:13px;font-weight:600;color:#001489}
 .kpis-h .l{font-size:7px;color:#4B5563;margin-top:1px}
 .tabs{display:flex;background:#fff;border-left:1px solid #E5E7EB;border-right:1px solid #E5E7EB;overflow-x:auto}
 .tabs button{flex:1;min-width:60px;padding:8px 4px;font-size:10px;font-weight:400;font-family:'Montserrat';background:#fff;color:#6B7280;border:none;border-bottom:1px solid #E5E7EB;cursor:pointer;white-space:nowrap}
@@ -82,10 +82,10 @@ tr{border-bottom:1px solid #E5E7EB}
 .acc:nth-child(5){animation-delay:0.3s}
 .acc-body{overflow:hidden;transition:max-height 0.3s ease-out;max-height:0;padding:0 14px;display:block}
 .acc.open .acc-body{max-height:2000px;padding:0 14px 10px}
-@media(max-width:768px){
+@media(max-width:960px){
   .hdr{flex-direction:column;align-items:flex-start;gap:10px;padding:14px 16px}
   .kpis-h{width:100%;justify-content:center;gap:6px}
-  .kpis-h>div{padding:4px 8px;flex:1;min-width:0;white-space:nowrap;overflow:visible}
+  .kpis-h>div{padding:5px 10px;flex:1;min-width:0}
 }
 @media(max-width:600px){
   .page{padding:6px}
@@ -160,9 +160,9 @@ tr{border-bottom:1px solid #E5E7EB}
   .hdr .sup{font-size:9px;letter-spacing:0.08em}
   .hdr h1{font-size:20px}
   .hdr .sub{font-size:10px}
-  .kpis-h{gap:12px}
-  .kpis-h>div{padding:8px 20px;border-radius:8px;flex:1;min-width:0;white-space:nowrap;overflow:visible}
-  .kpis-h .v{font-size:16px;letter-spacing:0}
+  .kpis-h{gap:10px}
+  .kpis-h>div{padding:7px 12px;border-radius:8px;flex:1;min-width:0}
+  .kpis-h .v{font-size:15px;letter-spacing:0}
   .kpis-h .l{font-size:7.5px}
   .content{padding:28px}
   .tabs button{font-size:11px;padding:10px 6px}
@@ -198,9 +198,9 @@ tr{border-bottom:1px solid #E5E7EB}
   .hdr-left img{width:52px;height:52px;border-radius:6px}
   .hdr h1{font-size:24px}
   .hdr .sup{font-size:10px}
-  .kpis-h .v{font-size:18px;letter-spacing:0}
-  .kpis-h .l{font-size:8.5px}
-  .kpis-h>div{padding:10px 22px;flex:1;min-width:0;white-space:nowrap;overflow:visible}
+  .kpis-h .v{font-size:17px;letter-spacing:0}
+  .kpis-h .l{font-size:8px}
+  .kpis-h>div{padding:8px 16px;flex:1;min-width:0}
   .content{padding:36px}
   .sec h3{font-size:15px}
   .stopgo-bar{height:58px!important}
@@ -243,7 +243,7 @@ tr{border-bottom:1px solid #E5E7EB}
     </div>
   </div>
   <div class="kpis-h">
-    <div><div class="v">343.173&nbsp;€</div><div class="l">Ejecutado</div></div>
+    <div style="flex:1.6"><div class="v">343.173&nbsp;€</div><div class="l">Ejecutado</div></div>
     <div><div class="v">41,9%</div><div class="l">Ejecución</div></div>
     <div><div class="v">539</div><div class="l">Días</div></div>
     <div><div class="v">59,9%</div><div class="l">% Días</div></div>
